@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Flash (ST-Link)",
+            "type": "shell",
+            "command": "${env:LOCALAPPDATA}/stm32cube/bundles/programmer/2.23.0/bin/STM32_Programmer_CLI.exe",
+            "args": ["-c", "port=SWD", "-w", "${workspaceFolder}/build/Debug/hw01.elf", "-v", "-rst"],
+            "dependsOn": "CMake: build",
+            "problemMatcher": []
+        },
+        {
+            "label": "CMake: build",
+            "type": "cmake",
+            "command": "build",
+            "preset": "Debug",
+            "group": { "kind": "build", "isDefault": true },
+            "problemMatcher": ["$gcc"]
+        }
+    ]
+}

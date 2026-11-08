@@ -1,0 +1,31 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "stlinkgdbtarget",
+            "request": "launch",
+            "name": "STM32: Nahrát a ladit (ST-Link)",
+            "origin": "snippet",
+            "cwd": "${workspaceFolder}",
+            "preBuild": "${command:st-stm32-ide-debug-launch.build}",
+            "runEntry": "main",
+            "imagesAndSymbols": [
+                {
+                    "imageFileName": "${workspaceFolder}/build/Debug/hw01.elf"
+                }
+            ]
+        },
+        {
+            "type": "stlinkgdbtarget",
+            "request": "attach",
+            "name": "STM32Cube: Attach (ST-Link)",
+            "origin": "snippet",
+            "cwd": "${workspaceFolder}",
+            "imagesAndSymbols": [
+                {
+                    "imageFileName": "${workspaceFolder}/build/Debug/hw01.elf"
+                }
+            ]
+        }
+    ]
+}

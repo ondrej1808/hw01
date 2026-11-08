@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<style>body{font-family:sans-serif;max-width:60em;margin:1em auto;padding:0 1em}table{border-collapse:collapse}td,th{border:1px solid #999;padding:2px 6px}pre{background:#f4f4f4;padding:.5em;overflow:auto}img{max-width:100%}</style>
+<!-- offline kopie https://cw.fel.cvut.cz/wiki/courses/amp_mam/tutorials/dev_kits/nucleo_stm32f401 -->
+  <meta charset="utf-8" />
+  <title>courses:amp_mam:tutorials:dev_kits:nucleo_stm32f401</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="theme-color" content="#0065bd"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="courses,amp mam,tutorials,dev kits,nucleo stm32f401"/>
+<link rel="search" type="application/opensearchdescription+xml" href="https://cw.fel.cvut.cz/wiki/lib/exe/opensearch.php" title="CourseWare Wiki"/>
+<link rel="start" href="https://cw.fel.cvut.cz/wiki/"/>
+<link rel="manifest" href="https://cw.fel.cvut.cz/wiki/lib/exe/manifest.php"/>
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="https://cw.fel.cvut.cz/wiki/feed.php"/>
+<link rel="alternate" type="application/rss+xml" title="Current namespace" href="https://cw.fel.cvut.cz/wiki/feed.php?mode=list&ns=courses:amp_mam:tutorials:dev_kits"/>
+<link rel="alternate" type="text/html" title="Plain HTML" href="https://cw.fel.cvut.cz/wiki/_export/xhtml/courses/amp_mam/tutorials/dev_kits/nucleo_stm32f401"/>
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="https://cw.fel.cvut.cz/wiki/_export/raw/courses/amp_mam/tutorials/dev_kits/nucleo_stm32f401"/>
+<link rel="canonical" href="tutorials_dev_kits_nucleo_stm32f401.html"/>
+
+<!--[if gte IE 9]><!-->
+
+
+
+<script type="text/x-mathjax-config">/*<![CDATA[*/MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+        displayMath: [ ["$$","$$"], ["\\[","\\]"] ],
+        processEscapes: true
+    },
+    TeX: { equationNumbers: {autoNumber: "AMS"} }
+});
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="https://cw.fel.cvut.cz/mathjax/mathjax/MathJax.js?config=TeX-AMS_CHTML.js"></script>
+<!--<![endif]-->
+</head>
+<body>
+<div class="dokuwiki export">
+<!-- TOC START -->
+<div id="dw__toc" class="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#nucleo_stm32f401">Nucleo STM32F401</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#nahrani_vzoroveho_kodu">Nahrání vzorového kódu</a></div></li>
+<li class="level2"><div class="li"><a href="#signalizace_ld1">Signalizace LD1</a></div></li>
+<li class="level2"><div class="li"><a href="#uzivatelske_periferie">Uživatelské periferie</a></div></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<h1 class="sectionedit1" id="nucleo_stm32f401">Nucleo STM32F401</h1>
+<div class="level1">
+
+<p>
+Vývojový kit k procesoru STM32F401RET6.
+Podrobné informace k vývojovému kitu lze najít v jeho datovém listu níže, zejména zapojení Arduino konektoru, propojení UART rozhraní s PC a vlastního tlačítka LED na desce.
+</p>
+<ul>
+<li class="level1"><div class="li">
+ <a href="media/nucleo_64_pins.pdf" class="media mediafile mf_pdf" title="courses:amp_mam:pdf:nucleo_64_pins.pdf (3.4 MB)">Datasheet vývojového kitu Nucleo64</a>
+</div></li>
+<li class="level1"><div class="li">
+ <a href="media/stm32f401_refmanual.pdf" class="media mediafile mf_pdf" title="courses:amp_mam:pdf:stm32f401_refmanual.pdf (9.6 MB)">Referenční manuál STM32F401</a> – popis periferií
+</div></li>
+<li class="level1"><div class="li">
+ <a href="media/stm32f401re_datasheet.pdf" class="media mediafile mf_pdf" title="courses:amp_mam:pdf:stm32f401re_datasheet.pdf (2 MB)">Datasheet STM32F401RE</a> – konkrétní informace, mapování pinů, paměti, spotřeba
+</div></li>
+</ul>
+
+
+<p>
+Kit se skládá ze dvou propojených desek: programátoru a procesorové desky. Deska s programátorem obsahuje USB-B mini konektor. Po připojení k PC se kit jeví jako datové úložiště, kterým lze procesor programovat. Po zkopírování zkompilovaného kódu (binární nebo Intel HEX soubor) na úložiště programátoru dojde k přenosu kódu do procesoru.
+</p>
+
+<p>
+Prostředí SEGGER Embedded Studio od verze V8.10 podporuje práci s STLink jako debuggerem. Pro konfiguraci studia použijte buď náš návod <a href="https://cw.fel.cvut.cz/wiki/courses/amp_mam/tutorials/ide/ses#podpora_stlink" class="wikilink1" title="courses:amp_mam:tutorials:ide:ses">Podpora STLink</a> nebo <a href="https://wiki.segger.com/Use_ST-Link_in_Embedded_Studio" class="urlextern" title="https://wiki.segger.com/Use_ST-Link_in_Embedded_Studio" rel="nofollow">oficiální návod</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Nucleo STM32F401&quot;,&quot;hid&quot;:&quot;nucleo_stm32f401&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-1263&quot;} -->
+<h2 class="sectionedit2" id="nahrani_vzoroveho_kodu">Nahrání vzorového kódu</h2>
+<div class="level2">
+
+<p>
+Vzorový kód pro procesory STM32 můžete nahrát pomocí programu STM32CubeProgrammer, který lze stáhnout z  <a href="https://www.st.com/en/development-tools/stm32cubeprog.html" class="urlextern" title="https://www.st.com/en/development-tools/stm32cubeprog.html" rel="nofollow">STM32CubeProgrammer software for all STM32</a>
+</p>
+
+<p>
+Pro nahrání kódu postupujte následovně:
+</p>
+<ol>
+<li class="level1"><div class="li">
+ Připojit vývojový kit a režim programátoru mít na typ <a href="https://www.segger.com/products/debug-probes/j-link/models/other-j-links/st-link-on-board/" class="urlextern" title="https://www.segger.com/products/debug-probes/j-link/models/other-j-links/st-link-on-board/" rel="nofollow">ST-Link</a> (J-link formát STM32CubeProgrammer nepodporuje)
+</div></li>
+<li class="level1"><div class="li">
+ Spustit STM32CubeProgrammer
+</div></li>
+<li class="level1"><div class="li">
+ Vpravo nahoře se připojte k vývojovému kitu
+</div></li>
+<li class="level1"><div class="li">
+ Nalevo vybrat možnost <code>Erasing &amp; Programming</code>
+</div></li>
+<li class="level1"><div class="li">
+ Vybrat příslušný .elf soubor
+</div></li>
+<li class="level1"><div class="li">
+ Stisknout <code>Start Programming</code> a vyčkat, než se program nahraje
+</div></li>
+</ol>
+
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Nahr\u00e1n\u00ed vzorov\u00e9ho k\u00f3du&quot;,&quot;hid&quot;:&quot;nahrani_vzoroveho_kodu&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;1264-2030&quot;} -->
+<h2 class="sectionedit3" id="signalizace_ld1">Signalizace LD1</h2>
+<div class="level2">
+
+<p>
+Programátor disponuje signalizační LED LD1. Význam signalizace pro STLink je následující (převzato s datasheetu):
+</p>
+<ul>
+<li class="level1"><div class="li">
+ Pomalé blikání červenou LED — inicializace desky před zahájením USB komunikace
+</div></li>
+<li class="level1"><div class="li">
+ Rychlé blikání červenou LED — enumerace USB (navazování připojení k PC)
+</div></li>
+<li class="level1"><div class="li">
+ Červená LED svítí — inicializace komunikace s PC úspěšná
+</div></li>
+<li class="level1"><div class="li">
+ Zelená LED svítí — komunikace s programovaným procesorem (target) úspěšná
+</div></li>
+<li class="level1"><div class="li">
+ Střídavě svítí červená a zelená LED — během programování target procesoru
+</div></li>
+<li class="level1"><div class="li">
+ Oranžová LED svítí — chyba komunikace
+</div></li>
+</ul>
+
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Signalizace LD1&quot;,&quot;hid&quot;:&quot;signalizace_ld1&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;2031-2658&quot;} -->
+<h2 class="sectionedit4" id="uzivatelske_periferie">Uživatelské periferie</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li">
+ Modré tlačítko B1 je namapované na pin <code>PC13</code>
+</div></li>
+<li class="level1"><div class="li">
+ Černé tlačítko slouží jako Reset mikrokontroléru
+</div></li>
+<li class="level1"><div class="li">
+ Zelená LED LD2 je namapovaná na pin <code>PA5</code>  
+</div></li>
+</ul>
+
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;U\u017eivatelsk\u00e9 periferie&quot;,&quot;hid&quot;:&quot;uzivatelske_periferie&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;2659-&quot;} --></div>
+</body>
+</html>

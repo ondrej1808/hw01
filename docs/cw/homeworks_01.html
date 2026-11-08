@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<style>body{font-family:sans-serif;max-width:60em;margin:1em auto;padding:0 1em}table{border-collapse:collapse}td,th{border:1px solid #999;padding:2px 6px}pre{background:#f4f4f4;padding:.5em;overflow:auto}img{max-width:100%}</style>
+<!-- offline kopie https://cw.fel.cvut.cz/wiki/courses/amp_mam/homeworks/01 -->
+  <meta charset="utf-8" />
+  <title>courses:amp_mam:homeworks:01</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="theme-color" content="#0065bd"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="courses,amp mam,homeworks,01"/>
+<link rel="search" type="application/opensearchdescription+xml" href="https://cw.fel.cvut.cz/wiki/lib/exe/opensearch.php" title="CourseWare Wiki"/>
+<link rel="start" href="https://cw.fel.cvut.cz/wiki/"/>
+<link rel="manifest" href="https://cw.fel.cvut.cz/wiki/lib/exe/manifest.php"/>
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="https://cw.fel.cvut.cz/wiki/feed.php"/>
+<link rel="alternate" type="application/rss+xml" title="Current namespace" href="https://cw.fel.cvut.cz/wiki/feed.php?mode=list&ns=courses:amp_mam:homeworks"/>
+<link rel="alternate" type="text/html" title="Plain HTML" href="https://cw.fel.cvut.cz/wiki/_export/xhtml/courses/amp_mam/homeworks/01"/>
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="https://cw.fel.cvut.cz/wiki/_export/raw/courses/amp_mam/homeworks/01"/>
+<link rel="canonical" href="homeworks_01.html"/>
+
+<!--[if gte IE 9]><!-->
+
+
+
+<script type="text/x-mathjax-config">/*<![CDATA[*/MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+        displayMath: [ ["$$","$$"], ["\\[","\\]"] ],
+        processEscapes: true
+    },
+    TeX: { equationNumbers: {autoNumber: "AMS"} }
+});
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="https://cw.fel.cvut.cz/mathjax/mathjax/MathJax.js?config=TeX-AMS_CHTML.js"></script>
+<!--<![endif]-->
+</head>
+<body>
+<div class="dokuwiki export">
+<!-- TOC START -->
+<div id="dw__toc" class="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#dekodovani_morseova_kodu">1. Dekódování Morseova Kódu</a></div>
+<ul class="toc">
+<li class="clear">
+<ul class="toc">
+<li class="level3"><div class="li"><a href="#zadani">Zadání</a></div></li>
+<li class="level3"><div class="li"><a href="#tip">Tip</a></div></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<h1 class="sectionedit1" id="dekodovani_morseova_kodu">1. Dekódování Morseova Kódu</h1>
+<div class="level1">
+<div class="table sectionedit2"><table class="inline">
+	<tr class="row0">
+		<th class="col0"> Bodové ohodnocení </th><td class="col1 leftalign"> 2 + 3 b                      </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0 leftalign"> Použitý jazyk     </th><td class="col1 leftalign"> C         </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 leftalign"> Vzorový program   </th><td class="col1 leftalign"> <a href="media/hw01_per01_demorse.zip" class="media mediafile mf_zip" title="courses:amp_mam:homeworks:hw01_per01_demorse.zip (20.6 KB)"> hw01_demorse-example.zip </a>              </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 leftalign"> Termín odevzdání  </th><td class="col1"> 18.11.2026 23.59 </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:2,&quot;range&quot;:&quot;48-304&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;1. Dek\u00f3dov\u00e1n\u00ed Morseova K\u00f3du&quot;,&quot;hid&quot;:&quot;dekodovani_morseova_kodu&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-305&quot;} -->
+<h3 class="sectionedit3" id="zadani">Zadání</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li">
+ Navrhněte v jazyce C kód pro dekódování Morseova kódu. Uvažujte časovou jednotku $T_{\mathrm{dit}} = 120\,\mathrm{ms}$
+</div></li>
+<li class="level1"><div class="li">
+ Použijte vývojový kit AMP.
+</div></li>
+<li class="level1"><div class="li">
+ Vstup dekodéru je na pinu PB7 ($f_{measure}$)
+</div></li>
+<li class="level1"><div class="li">
+ Pro testování využijte kód ze cvičení a zapojte výstup Morseova kodéru (P3 nebo P6) na vstup dekodéru (P4), nebo propojte dvě desky
+</div></li>
+<li class="level1"><div class="li">
+ Navrhněte a implementujte postup příjmu symbolů:
+</div><ul>
+<li class="level2"><div class="li">
+ kdy jsou symboly posílané typu ON-OFF (2 b),
+</div></li>
+<li class="level2"><div class="li">
+ kdy jsou symboly posílané jako tón (3 b),
+</div></li>
+<li class="level2"><div class="li">
+ nebo oba.
+</div></li>
+</ul>
+</li>
+<li class="level1"><div class="li">
+ Implementujte dekodér.
+</div></li>
+</ul>
+
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Zad\u00e1n\u00ed&quot;,&quot;hid&quot;:&quot;zadani&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;306-893&quot;} -->
+<h3 class="sectionedit4" id="tip">Tip</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li">
+ Použijte časovač
+</div></li>
+<li class="level1"><div class="li">
+ Využijte FSM
+</div></li>
+</ul>
+
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Tip&quot;,&quot;hid&quot;:&quot;tip&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;894-&quot;} --></div>
+</body>
+</html>

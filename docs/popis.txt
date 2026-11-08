@@ -1,0 +1,10 @@
+Výstup kodéru: 
+  * PC0 --- ON-OFF pulz (PWM)
+  * P3.2 (pravý) Buzzer EN --- audio výstup (AM tónu časovače)
+Vstup dekodéru:
+  * P4.1 (levý) F Measure
+Ovládání:
+  * UART 115200n8 --- příjem a vysílání Morse zpráv
+  * SW2 tlačítko --- přepínání dekódovacího řežimu (pulz/tón)
+
+

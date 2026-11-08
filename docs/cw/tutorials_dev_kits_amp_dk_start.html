@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<style>body{font-family:sans-serif;max-width:60em;margin:1em auto;padding:0 1em}table{border-collapse:collapse}td,th{border:1px solid #999;padding:2px 6px}pre{background:#f4f4f4;padding:.5em;overflow:auto}img{max-width:100%}</style>
+<!-- offline kopie https://cw.fel.cvut.cz/wiki/courses/amp_mam/tutorials/dev_kits/amp_dk/start -->
+  <meta charset="utf-8" />
+  <title>courses:amp_mam:tutorials:dev_kits:amp_dk:start</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="theme-color" content="#0065bd"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="courses,amp mam,tutorials,dev kits,amp dk,start"/>
+<link rel="search" type="application/opensearchdescription+xml" href="https://cw.fel.cvut.cz/wiki/lib/exe/opensearch.php" title="CourseWare Wiki"/>
+<link rel="start" href="https://cw.fel.cvut.cz/wiki/"/>
+<link rel="manifest" href="https://cw.fel.cvut.cz/wiki/lib/exe/manifest.php"/>
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="https://cw.fel.cvut.cz/wiki/feed.php"/>
+<link rel="alternate" type="application/rss+xml" title="Current namespace" href="https://cw.fel.cvut.cz/wiki/feed.php?mode=list&ns=courses:amp_mam:tutorials:dev_kits:amp_dk"/>
+<link rel="alternate" type="text/html" title="Plain HTML" href="https://cw.fel.cvut.cz/wiki/_export/xhtml/courses/amp_mam/tutorials/dev_kits/amp_dk/start"/>
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="https://cw.fel.cvut.cz/wiki/_export/raw/courses/amp_mam/tutorials/dev_kits/amp_dk/start"/>
+<link rel="canonical" href="tutorials_dev_kits_amp_dk_start.html"/>
+
+<!--[if gte IE 9]><!-->
+
+
+
+<script type="text/x-mathjax-config">/*<![CDATA[*/MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+        displayMath: [ ["$$","$$"], ["\\[","\\]"] ],
+        processEscapes: true
+    },
+    TeX: { equationNumbers: {autoNumber: "AMS"} }
+});
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="https://cw.fel.cvut.cz/mathjax/mathjax/MathJax.js?config=TeX-AMS_CHTML.js"></script>
+<!--<![endif]-->
+</head>
+<body>
+<div class="dokuwiki export">
+
+<h1 class="sectionedit1" id="vyvojovy_kit_amp_development_kit_amp-dk">Vývojový kit AMP Development Kit (AMP-DK)</h1>
+<div class="level1">
+
+<p>
+Pro výuku předmětu <strong>Aplikované mikroprocesory</strong> byl vytvořen nový vývojový kit, který obsahuje základní periferie, se kterými se lze běžně setkat při práci s mikrokontroléry. Umožňuje procvičit například práci s čítači a časovači, rozhraními USART, A/D převodníky a řadou dalších hardwarových periferií.
+</p>
+
+<p>
+V následujícím obrázku a tabulce je uveden přehled dostupných funkcí desky a periferií mikrokontroléru, které jednotlivé bloky využívají.
+</p>
+
+<p>
+Kit je primárně určen pro <strong>Nucleo-F401RE</strong>, na kterém lze využít většinu jeho funkcí. Pro plné využití je vhodnější <strong>Nucleo-F446RE</strong>, které navíc umožňuje pracovat například s integrovaným DAC a sběrnicí CAN.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;V\u00fdvojov\u00fd kit AMP Development Kit (AMP-DK)&quot;,&quot;hid&quot;:&quot;vyvojovy_kit_amp_development_kit_amp-dk&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-791&quot;} -->
+<h2 class="sectionedit2" id="dokumentace_a_zdrojove_soubory">Dokumentace a zdrojové soubory</h2>
+<div class="level2">
+
+<p>
+Celé schéma zapojení je k dispozici jako PDF:
+</p>
+<ul>
+<li class="level1"><div class="li">
+ <a href="media/amp_shield_100_schematics.pdf" class="media mediafile mf_pdf" title="courses:amp_mam:tutorials:dev_kits:amp_shield_100_schematics.pdf (2.8 MB)"> AMP Development Kit – schéma zapojení </a>
+</div></li>
+</ul>
+
+
+<p>
+Kompletní zdrojová data projektu jsou po přihlášení dostupná také na:
+</p>
+<ul>
+<li class="level1"><div class="li">
+ <a href="https://gitlab.fel.cvut.cz/b2m37amp1/amp-dev-kit" class="urlextern" title="https://gitlab.fel.cvut.cz/b2m37amp1/amp-dev-kit" rel="nofollow">školním GitLabu</a>
+</div></li>
+</ul>
+
+
+<p>
+<span id="img_amp_dev_kit_overview" class="imgcaption">
+<a href="https://cw.fel.cvut.cz/wiki/_detail/courses/amp_mam/tutorials/dev_kits/amp_kit_100a.png?id=courses%3Aamp_mam%3Atutorials%3Adev_kits%3Aamp_dk%3Astart" class="media" title="courses:amp_mam:tutorials:dev_kits:amp_kit_100a.png"><img src="img/amp_kit_100a.png" class="mediacenter" title="Vývojový kit AMP Dev Kit s vyznačením jednotlivých funkčních bloků" alt="Vývojový kit AMP Dev Kit s vyznačením jednotlivých funkčních bloků" width="600" /></a>
+<span class="undercaption">
+	Fig. 1:  Vývojový kit AMP Dev Kit s vyznačením jednotlivých funkčních bloků <a href=" "><span></span></a>
+</span>
+</span>
+</p>
+<div class="table sectionedit3"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0"> # </th><th class="col1"> Použití </th><th class="col2"> HW periferie </th><th class="col3"> Použití </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0"> 1 </td><td class="col1"> 3× tlačítka </td><td class="col2"> EXTI, TIM2 </td><td class="col3"> Využití externích přerušení a Input Capture </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> 2 </td><td class="col1"> 4× LED </td><td class="col2"> GPIO </td><td class="col3"> Základní digitální výstupy </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> 3 </td><td class="col1"> LED Display </td><td class="col2"> SPI3 + TIM2 + GPIO </td><td class="col3"> TIM2 pro řízení intenzity, SPI sdílené s LCD </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0"> 4 </td><td class="col1"> LCD </td><td class="col2"> SPI3 + TIM3 + GPIO </td><td class="col3"> TIM3 pro řízení intenzity, SPI sdílené s LED displejem </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0"> 5 </td><td class="col1"> PWM Audio </td><td class="col2"> TIM1 </td><td class="col3"> Výstup lze vést přímo nebo přes dolní propust a zesilovač do reproduktoru </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0"> 6 </td><td class="col1"> Audio In/Out </td><td class="col2"> ADC, DAC </td><td class="col3"> Stereo jack může sloužit jako vstup signálu do A/D převodníku; na F446 lze rovněž generovat analogový signál pomocí integrovaného DAC </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0"> 7 </td><td class="col1"> I2S Audio </td><td class="col2"> I2S2 </td><td class="col3"> Digitální audio rozhraní </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0"> 8 </td><td class="col1"> Buzzer </td><td class="col2"> TIM1 </td><td class="col3"> Řízení integrovaného bzučáku pomocí PWM </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0"> 9 </td><td class="col1"> LED WS2812 </td><td class="col2"> SPI1 / TIM3 </td><td class="col3"> Generování přesného časování a kódování pro řízení adresovatelné LED </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0"> - </td><td class="col1"> USART → PC </td><td class="col2"> USART2 </td><td class="col3"> Komunikace s PC prostřednictvím rozhraní Nucleo </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0"> 10 </td><td class="col1"> USART → ESP32 </td><td class="col2"> USART6 + GPIO </td><td class="col3"> Komunikace s ESP32-S3, které lze využít jako Wi-Fi nebo Bluetooth gateway </td>
+	</tr>
+	<tr class="row12">
+		<td class="col0"> 11 </td><td class="col1"> RS-485 </td><td class="col2"> USART1 + GPIO </td><td class="col3"> Řízení signálu DE pomocí GPIO </td>
+	</tr>
+	<tr class="row13">
+		<td class="col0"> 12 </td><td class="col1"> CAN </td><td class="col2"> CAN2 </td><td class="col3"> Dostupné pouze na F446 nebo jiném kompatibilním MCU s CAN </td>
+	</tr>
+	<tr class="row14">
+		<td class="col0"> 13 </td><td class="col1"> RTC </td><td class="col2"> I2C1 + LSE </td><td class="col3"> Externí RTC; po úpravě Nuclea lze využít také LSE takt pro interní RTC mikrokontroléru </td>
+	</tr>
+	<tr class="row15">
+		<td class="col0"> 13 </td><td class="col1"> EEPROM </td><td class="col2"> I2C1 + GPIO </td><td class="col3"> Signál WP je řízen pomocí GPIO </td>
+	</tr>
+	<tr class="row16">
+		<td class="col0"> 14 </td><td class="col1"> Trimmer </td><td class="col2"> ADC </td><td class="col3"> Analogový vstup pro jednoduché testování A/D převodníku </td>
+	</tr>
+	<tr class="row17">
+		<td class="col0"> 15 </td><td class="col1"> f Measure </td><td class="col2"> TIM4 </td><td class="col3"> Vstup pro měření externí frekvence </td>
+	</tr>
+	<tr class="row18">
+		<td class="col0"> 16 </td><td class="col1"> MCU Reset </td><td class="col2"> RST </td><td class="col3"> Reset mikrokontroléru </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:3,&quot;range&quot;:&quot;1423-3081&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Dokumentace a zdrojov\u00e9 soubory&quot;,&quot;hid&quot;:&quot;dokumentace_a_zdrojove_soubory&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;792-&quot;} --></div>
+</body>
+</html>

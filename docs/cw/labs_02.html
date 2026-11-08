@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<style>body{font-family:sans-serif;max-width:60em;margin:1em auto;padding:0 1em}table{border-collapse:collapse}td,th{border:1px solid #999;padding:2px 6px}pre{background:#f4f4f4;padding:.5em;overflow:auto}img{max-width:100%}</style>
+<!-- offline kopie https://cw.fel.cvut.cz/wiki/courses/amp_mam/labs/02 -->
+  <meta charset="utf-8" />
+  <title>courses:amp_mam:labs:02</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="theme-color" content="#0065bd"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="courses,amp mam,labs,02"/>
+<link rel="search" type="application/opensearchdescription+xml" href="https://cw.fel.cvut.cz/wiki/lib/exe/opensearch.php" title="CourseWare Wiki"/>
+<link rel="start" href="https://cw.fel.cvut.cz/wiki/"/>
+<link rel="manifest" href="https://cw.fel.cvut.cz/wiki/lib/exe/manifest.php"/>
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="https://cw.fel.cvut.cz/wiki/feed.php"/>
+<link rel="alternate" type="application/rss+xml" title="Current namespace" href="https://cw.fel.cvut.cz/wiki/feed.php?mode=list&ns=courses:amp_mam:labs"/>
+<link rel="alternate" type="text/html" title="Plain HTML" href="https://cw.fel.cvut.cz/wiki/_export/xhtml/courses/amp_mam/labs/02"/>
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="https://cw.fel.cvut.cz/wiki/_export/raw/courses/amp_mam/labs/02"/>
+<link rel="canonical" href="labs_02.html"/>
+
+<!--[if gte IE 9]><!-->
+
+
+
+<script type="text/x-mathjax-config">/*<![CDATA[*/MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+        displayMath: [ ["$$","$$"], ["\\[","\\]"] ],
+        processEscapes: true
+    },
+    TeX: { equationNumbers: {autoNumber: "AMS"} }
+});
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="https://cw.fel.cvut.cz/mathjax/mathjax/MathJax.js?config=TeX-AMS_CHTML.js"></script>
+<!--<![endif]-->
+</head>
+<body>
+<div class="dokuwiki export">
+<!-- TOC START -->
+<div id="dw__toc" class="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#gpio_a_preruseni">2. GPIO a přerušení</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#priprava_na_cviceni">Příprava na cvičení</a></div></li>
+<li class="level2"><div class="li"><a href="#ukoly_na_cviceni">Úkoly na cvičení</a></div></li>
+<li class="level2"><div class="li"><a href="#ukoly_na_doma">Úkoly na doma</a></div></li>
+<li class="level2"><div class="li"><a href="#popis">Popis</a></div>
+<ul class="toc">
+<li class="level3"><div class="li"><a href="#prace_s_dokumenty">Práce s dokumenty</a></div></li>
+<li class="level3"><div class="li"><a href="#distribuce_hodinoveho_signalu">Distribuce hodinového signálu</a></div></li>
+<li class="level3"><div class="li"><a href="#generic_purpose_input_output_gpio">Generic Purpose Input Output (GPIO)</a></div></li>
+<li class="level3"><div class="li"><a href="#preruseni">Přerušení</a></div></li>
+<li class="level3"><div class="li"><a href="#sedmisegmentovy_displej">Sedmisegmentový displej</a></div></li>
+<li class="level3"><div class="li"><a href="#na_zamysleni">Na zamyšlení</a></div></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<h1 class="sectionedit1" id="gpio_a_preruseni">2. GPIO a přerušení</h1>
+<div class="level1">
+<div class="table sectionedit2"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Kompetence   </th><td class="col1"> Bitové operace, ovládání pinů, převod čísla na segmenty, časový multiplex </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0"> Periferie </th><td class="col1"> <em>GPIO, RCC, EXTI, SCB</em>, jádro </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0"> Kostra kódu </th><td class="col1"> <a href="media/02_gpio-template.zip" class="media mediafile mf_zip" title="courses:amp_mam:labs:codes:02_gpio-template.zip (170.9 KB)">02_gpio-template.zip</a> </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:2,&quot;range&quot;:&quot;39-285&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;2. GPIO a p\u0159eru\u0161en\u00ed&quot;,&quot;hid&quot;:&quot;gpio_a_preruseni&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-286&quot;} -->
+<h2 class="sectionedit3" id="priprava_na_cviceni">Příprava na cvičení</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li">
+ Seznámit se s knihovnou <a href="media/gpio-driver.zip" class="media mediafile mf_zip" title="courses:amp_mam:labs:codes:gpio-driver.zip (1.9 KB)">GPIO</a>
+</div></li>
+<li class="level1"><div class="li">
+ Kapitoly v datovém listu a manuálu
+</div><ul>
+<li class="level2"><div class="li">
+ <a href="media/stm32f401_refmanual.pdf#page=94" class="media mediafile mf_pdf" title="courses:amp_mam:pdf:stm32f401_refmanual.pdf (9.6 MB)">RM: RCC obrázek 12</a>
+</div></li>
+<li class="level2"><div class="li">
+ <a href="media/stm32f401_refmanual.pdf#page=146" class="media mediafile mf_pdf" title="courses:amp_mam:pdf:stm32f401_refmanual.pdf (9.6 MB)">RM: Kapitola 8 (GPIO)</a>
+</div></li>
+<li class="level2"><div class="li">
+ <a href="media/stm32f401_refmanual.pdf#page=202" class="media mediafile mf_pdf" title="courses:amp_mam:pdf:stm32f401_refmanual.pdf (9.6 MB)">RM: Kapitola 10 (EXTI)</a>
+</div></li>
+<li class="level2"><div class="li">
+ <a href="media/stm32f401_refmanual.pdf#page=140" class="media mediafile mf_pdf" title="courses:amp_mam:pdf:stm32f401_refmanual.pdf (9.6 MB)">RM: Kapitola 7 (SYSCFG)</a>
+</div></li>
+</ul>
+</li>
+<li class="level1"><div class="li">
+ Seznámit se s posuvným registrem 74595 (<a href="media/sn74hc595.pdf" class="media mediafile mf_pdf" title="courses:amp_mam:pdf:sn74hc595.pdf (2.6 MB)">74595 datasheet</a>)
+</div></li>
+<li class="level1"><div class="li">
+ Projít si schéma rozšiřující desky <a href="media/amp_shield_100_schematics.pdf" class="media mediafile mf_pdf" title="courses:amp_mam:tutorials:dev_kits:amp_shield_100_schematics.pdf (2.8 MB)">AMP-DK</a>
+</div></li>
+<li class="level1"><div class="li">
+ Zopakovat jazyk C:
+</div><ul>
+<li class="level2"><div class="li">
+ řídící struktury (podmínky, cykly)
+</div></li>
+<li class="level2"><div class="li">
+ struktury jako datový typ
+</div></li>
+<li class="level2"><div class="li">
+ ukazatele
+</div></li>
+</ul>
+</li>
+<li class="level1"><div class="li">
+ Kapitoly v přednáškách
+</div><ul>
+<li class="level2"><div class="li">
+ <a href="media/amp-skripta-2026.pdf#page=39" class="media mediafile mf_pdf" title="courses:amp_mam:lectures:amp-skripta-2026.pdf (11.6 MB)">Skripta: 2. Čas, hodiny a periferie</a>
+</div></li>
+<li class="level2"><div class="li">
+ <a href="https://cw.fel.cvut.cz/wiki/courses/amp_mam/lectures/start#cas_hodiny_a_periferie" class="wikilink1" title="courses:amp_mam:lectures:start">Přednáška: 2. Čas, hodiny a periferie</a>
+</div></li>
+</ul>
+</li>
+<li class="level1"><div class="li">
+ Odkazy na web
+</div><ul>
+<li class="level2"><div class="li">
+ <a href="https://interrupt.memfault.com/blog/arm-cortex-m-exceptions-and-nvic" class="urlextern" title="https://interrupt.memfault.com/blog/arm-cortex-m-exceptions-and-nvic" rel="nofollow">A Practical guide to ARM Cortex-M Exception Handling</a>
+</div></li>
+</ul>
+</li>
+</ul>
+
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;P\u0159\u00edprava na cvi\u010den\u00ed&quot;,&quot;hid&quot;:&quot;priprava_na_cviceni&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;287-1548&quot;} -->
+<h2 class="sectionedit4" id="ukoly_na_cviceni">Úkoly na cvičení</h2>
+<div class="level2">
+<ol>
+<li class="level1"><div class="li">
+ seznámit se s periferií RCC
+</div></li>
+<li class="level1"><div class="li">
+ naučit se konfigurovat a pracovat se vstupně-výstupními piny (GPIO)
+</div></li>
+<li class="level1"><div class="li">
+ seznámit se se systémem přerušení (EXTI)
+</div></li>
+<li class="level1"><div class="li">
+ ovládat sedmisegmentový displej (SHCP PC12, DATA PC10, STCP PA15, OE PB1)
+</div></li>
+<li class="level1"><div class="li">
+ počítat počet stisků tlačítka SW0 (PA0)
+</div></li>
+<li class="level1"><div class="li">
+ zobrazit počet stisknutí tlačítka
+</div></li>
+</ol>
+
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u00dakoly na cvi\u010den\u00ed&quot;,&quot;hid&quot;:&quot;ukoly_na_cviceni&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;1549-1914&quot;} -->
+<h2 class="sectionedit5" id="ukoly_na_doma">Úkoly na doma</h2>
+<div class="level2">
+<ol>
+<li class="level1"><div class="li">
+ s využitím EXTI vylepšete program, aby reagoval na sestupnou hranu, když dojde ke stisku tlačítka SW0
+</div></li>
+</ol>
+
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u00dakoly na doma&quot;,&quot;hid&quot;:&quot;ukoly_na_doma&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;1915-2055&quot;} -->
+<h2 class="sectionedit6" id="popis">Popis</h2>
+<div class="level2">
+
+<p>
+Na cvičeních pracujeme s vývojovým kitem Nucleo64, na kterém je mikrokontrolér STM32F401RET.
+Obsah cvičení tak bude specifický pro daný mikrokontrolér, avšak látka se dá zobecnit a postupy jsou aplikovatelné i pro jiné mikrokontroléry nebo mikroprocesory.
+Na cvičeních také budeme pracovat s rozšiřující deskou <a href="tutorials_dev_kits_amp_dk_start.html" class="wikilink1" title="courses:amp_mam:tutorials:dev_kits:amp_dk:start">AMP-DK</a>.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Popis&quot;,&quot;hid&quot;:&quot;popis&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;2056-2469&quot;} -->
+<h3 class="sectionedit7" id="prace_s_dokumenty">Práce s dokumenty</h3>
+<div class="level3">
+
+<p>
+Při práci s embedded (vestavěné, malé, mikrokontrolérové) systémy je třeba používat různé manuály, které popisují jak čipy používat.
+Pro každé MCU existuje řada dokumentů, mezi které patří:
+</p>
+<ul>
+<li class="level1"><div class="li">
+ Referenční manuál (RM, Reference Manual) typicky popisuje rodinu MCU (například STM32F401). Dokument obsahuje popis periferií, jejich funkci, registry a jejich obsah.
+</div></li>
+<li class="level1"><div class="li">
+ Datový list (DS, datasheet) popisuje konkrétní čip (například STM32F401RET). V dokumentu najdeme velikosti pamětí FLASH a SRAM, konkrétní mapování periferií v paměti, pouzdra čipu, přiřazení pinů a jejich <strong>alternativní funkce</strong>, elektrické charakteristiky (například spotřeba) a další.
+</div></li>
+<li class="level1"><div class="li">
+ Aplikační poznámky (AN, application note) ukazují jak čip používat v dané aplikaci. Často existuje AN pro použití některé z periferií a s jejich pomocí se tak můžeme s ní rychleji naučit.
+</div></li>
+<li class="level1"><div class="li">
+ Chybový list (Errata) upozorňuje na nalezené chyby v HW čipu a jak se s nimi vypořádat.
+</div></li>
+</ul>
+
+
+<p>
+Dokumenty často mívají stovky, ne-li tisíce, stran, což není na škodu. Popis periferií jde často do hloubky a popisuje i známe principy a protokoly.
+Běžně tak stačí přečíst si část kapitoly o periferii, se kterou chceme pracovat, a podívat se na popis registrů.
+Typický postup práce je nejprve se podívat do RM a pak v DS najít příslušné piny a jejich nastavení.
+Pokud pracujeme ještě s externím čipem či součástkou (například posuvným registrem), podíváme se od jeho datasheetu abychom zjistili, jak s ním pracovat (tyto DS bývají naštěstí krátké).
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Pr\u00e1ce s dokumenty&quot;,&quot;hid&quot;:&quot;prace_s_dokumenty&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;2470-4120&quot;} -->
+<h3 class="sectionedit8" id="distribuce_hodinoveho_signalu">Distribuce hodinového signálu</h3>
+<div class="level3">
+
+<p>
+Činnost mikrokontroléru je dána hlavním hodinovým signálem <code>SYSCLK</code>, který je odvozen od jednoho z dostupných zdrojů signálu.
+Jak je <code>SYSCLK</code> generován a jak manipulovat s frekvencí se budeme zabývat na pozdějším <a href="https://cw.fel.cvut.cz/wiki/courses/amp_mam/labs/10" class="wikilink1" title="courses:amp_mam:labs:10">cvičení</a>.
+</p>
+
+<p>
+V použitém MCU jsou k dispozici tyto zdroje hodinového signálu:
+</p>
+<ul>
+<li class="level1"><div class="li">
+ High Speed Internal (HSI), 16 <abbr title="Megahertz">MHz</abbr> RC oscilátor, lze použít pro <code>SYSCLK</code>,
+</div></li>
+<li class="level1"><div class="li">
+ High Speed External (HSE), rychlý oscilátor, který vyžaduje externí krystal o frekvenci 4 <abbr title="Megahertz">MHz</abbr> až 26 <abbr title="Megahertz">MHz</abbr>, lze použít pro <code>SYSCLK</code>,
+</div></li>
+<li class="level1"><div class="li">
+ Low Speed Internal (LSI), 32 768 Hz RC oscilátor, používán pro watchdog a RTC,
+</div></li>
+<li class="level1"><div class="li">
+ Low Speed Externeal (LSE), pomalý oscilátor, vyžaduje externí krystal o frekvenci 32 768 Hz, používán pro přesné časování watchdogu a RTC.
+</div></li>
+</ul>
+
+
+<p>
+O zdroje hodin, distribuci a manipulaci hodinového signálu se stará periferie RCC.
+Distribuce hodin je znázorněna na obrázku <a href="labs_02.html#img_stm32f4_clock_tree">figure&nbsp;1</a>.
+</p>
+
+<p>
+<span id="img_stm32f4_clock_tree" class="imgcaption">
+<a href="https://cw.fel.cvut.cz/wiki/_detail/courses/amp_mam/labs/stm32f4_rcc_tree.jpg?id=courses%3Aamp_mam%3Alabs%3A02" class="media" title="courses:amp_mam:labs:stm32f4_rcc_tree.jpg"><img src="img/stm32f4_rcc_tree.jpg" class="mediacenter" title="STM32F4 Hodinový strom (Clock Tree)" alt="STM32F4 Hodinový strom (Clock Tree)" width="600" /></a>
+<span class="undercaption">
+	Fig. 1:  STM32F4 Hodinový strom (Clock Tree) <a href=" "><span></span></a>
+</span>
+</span>
+</p>
+
+<p>
+Periferie jsou sdružené do sběrnic AHB1, AHB2, APB1 a APB2.
+RCC obsahuje registry, které hodiny periferiím zapínají (<code>RCC→xENR</code>), které hodiny nechají zapnuté v režimu nízké spotřeby (<code>RCC→xLPENR</code>) a které provedou reset periferii (<code>RCC→xRSTR</code>).
+Hodiny jsou od periferii oddělené hradlem AND, které hodiny propustí dál pouze tehdy, když je nastaven příslušný bit.
+Například na obrázku <a href="labs_02.html#img_stm32f4_clock_tree">figure&nbsp;1</a>.
+</p>
+
+<p>
+Na obrázku <a href="labs_02.html#img_stm32f4_rcc_ahb1enr">figure&nbsp;2</a> je uveden registr <code>RCC→AHB1ENR</code>, který zapíná hodiny periferií ze skupiny AHB1.
+<span id="img_stm32f4_rcc_ahb1enr" class="imgcaption">
+<a href="https://cw.fel.cvut.cz/wiki/_detail/courses/amp_mam/labs/stm32f4_rcc_apb1enr.jpg?id=courses%3Aamp_mam%3Alabs%3A02" class="media" title="courses:amp_mam:labs:stm32f4_rcc_apb1enr.jpg"><img src="img/stm32f4_rcc_apb1enr.jpg" class="mediacenter" title="AHB1ENR registr (povolení hodin periferiím na AHB1 sběrnici)" alt="AHB1ENR registr (povolení hodin periferiím na AHB1 sběrnici)" width="800" /></a>
+<span class="undercaption">
+	Fig. 2:  AHB1ENR registr (povolení hodin periferiím na AHB1 sběrnici) <a href=" "><span></span></a>
+</span>
+</span>
+</p>
+
+<p>
+Hodiny většiny periferií bývají po restartu MCU vypnuté, aby se tak šetřilo energií a zapínalo se jen to, co je třeba.
+Hodiny jsou třeba, aby s danou periferií šlo pracovat.
+Dle manuálu je pro zapnutí hodin třeba nastavit bit (dát do jedničky, <em>set</em>) dané periferie.
+Například pro zapnutí hodin <code>GPIOA</code> se v registru nastaví nultý bit.
+<pre class="code c">  RCC<span class="sy0">-&gt;</span>AHB1ENR <span class="sy0">|=</span> <span class="nu0">1</span><span class="sy0">;</span> <span class="co1">// 0x00000001</span>
+  <span class="co1">// nebo</span>
+  RCC<span class="sy0">-&gt;</span>AHB1ENR <span class="sy0">|=</span> <span class="nu0">1</span> <span class="sy0">&lt;&lt;</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="co1">// nebo</span>
+  RCC<span class="sy0">-&gt;</span>AHB1ENR <span class="sy0">|=</span> RCC_AHB1ENR_GPIOAEN<span class="sy0">;</span></pre>
+
+Operace <code>x |= y</code> je zkrácený zápis pro <code> x = x | y</code>, kde <code>|</code> provede bitový součet (<em>bit-wise OR</em>).
+</p>
+
+<p>
+Vypnutí hodin je provedeno analogicky vyčištením příslušného bitu (dát do nuly, <em>clear</em>).
+<pre class="code c">  RCC<span class="sy0">-&gt;</span>AHB1ENR <span class="sy0">&amp;=</span> ~<span class="nu0">1</span><span class="sy0">;</span> <span class="co1">// 0xFFFFFFFE</span>
+  <span class="co1">// nebo</span>
+  RCC<span class="sy0">-&gt;</span>AHB1ENR <span class="sy0">&amp;=</span> ~<span class="br0">&#40;</span><span class="nu0">1</span> <span class="sy0">&lt;&lt;</span> <span class="nu0">0</span><span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="co1">// nebo</span>
+  RCC<span class="sy0">-&gt;</span>AHB1ENR <span class="sy0">&amp;=</span> ~RCC_AHB1ENR_GPIOAEN<span class="sy0">;</span></pre>
+
+Operace <code>x &amp;= y</code> je zkrácený zápis pro <code> x = x &amp; y</code>, kde <code>&amp;</code> provede bitový součin (<em>bit-wise AND</em>).
+</p>
+<div class="plugin_note notewarning">Všimněte si, že v kódu výše používáme operátor, který kombinuje operaci bitového součtu s přiřazením či bitového součinu s přiřazením.
+Důvodem je, že často potřebujeme “donutit” jen některé bity do dané hodnoty a zbytek nechat beze změny.
+Například chceme zapnout hodiny jen jedné periferie a zbytek nechat tak jak byly.
+<p>
+V druhém případě je použita kombinace <code>&amp;=</code> a bitové inverze <code>~</code>. Tomu se říká <strong>maskování</strong>, neboť schováme nezajímavé bity za “masku” (za jedničky, protože <code>x &amp; 1 = x</code>) a vyčistíme jen ty bity, které chceme.
+</p>
+
+</div><div class="plugin_note notewarning">Pozor, v C jsou definovány operace pro bitový součet/součin <code>x | y</code>/<code>x &amp; y</code> a logický součet/součin <code>x || y</code>/<code>x &amp;&amp; y</code>.
+Rozdíl je zcela zásadní a častým zdrojem chyb.
+Zatímco bitové operace jsou aplikovány na každý bit proměnných zvlášť, logické operace uvažují hodnotu proměnných (konkrétně, zda-li jsou pravda/nepravda, v C je pravda jakákoliv nenulová hodnota).
+Například, pokud <code>x = 0x3 = 0b11</code> a <code>y = 0x8 = 0b1000</code>, pak <code>x | y = 0xB = 0b1011</code>, zatímco <code>x || y = 1</code>, což je rozdílné.
+</div>
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Distribuce hodinov\u00e9ho sign\u00e1lu&quot;,&quot;hid&quot;:&quot;distribuce_hodinoveho_signalu&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;4121-8263&quot;} -->
+<h3 class="sectionedit9" id="generic_purpose_input_output_gpio">Generic Purpose Input Output (GPIO)</h3>
+<div class="level3">
+
+<p>
+GPIO periferie, či GPIO brána, zastřešuje funkci pinů MCU a propojuje interní periferie s okolními obvody.
+U STM32F4 může GPIO brána mít maximálně 16 pinů.
+STM32F4 má 6 bran (všechny na AHB1): GPIOA, GPIOB, GPIOC, GPIOD, GPIOE a GPIOH [<a href='/wiki/bib?file=amp_mam&amp;ref=STM32F4_DS'>STM32F4_DS</a>] (kapitola 5, tabulka 10).
+Struktura pinu 
+Každý pin může být nastaven jako vstupní, výstupní, alternativní funkce nebo analogový.
+Po restartu jsou všechny piny, až na nutné výjimky (napájení, debug), nastaveny jako vstupní.
+V tomto režimu jsou ve stavu vysoké impedance a neovlivňují cokoliv je k nim připojeno.
+</p>
+
+<p>
+<span id="img_stm32f4_gpio_structure" class="imgcaption">
+<a href="https://cw.fel.cvut.cz/wiki/_detail/courses/amp_mam/labs/stm32f4_gpio_structure.jpg?id=courses%3Aamp_mam%3Alabs%3A02" class="media" title="courses:amp_mam:labs:stm32f4_gpio_structure.jpg"><img src="img/stm32f4_gpio_structure.jpg" class="mediacenter" title="Struktura GPIO pinu" alt="Struktura GPIO pinu" width="600" /></a>
+<span class="undercaption">
+	Fig. 3:  Struktura GPIO pinu <a href=" "><span></span></a>
+</span>
+</span>
+</p>
+
+<p>
+Chování pinu je dáno registry:
+</p>
+<ul>
+<li class="level1"><div class="li">
+ <code>MODER</code> výběr módu pinu, každý pin tu má vyhrazeny 2 bity, vstup <code>0</code>, výstup <code>1</code>, alternativní funkce <code>2</code>,  analog <code>3</code>
+</div></li>
+<li class="level1"><div class="li">
+ <code>AFRL</code> a <code>AFRH</code>, výběr 1 z 16 alternativní funkcí pinu, jejich popis je v [<a href='/wiki/bib?file=amp_mam&amp;ref=STM32F4_DS'>STM32F4_DS</a>], každý pin tu má 4 bity pro výběr funkce ($16=2^4$), při 16 pinech je tak třeba 64 bitů a proto máme dva 32bit registry,
+</div></li>
+<li class="level1"><div class="li">
+ <code>PUPDR</code> nastavení pull-up/pull-down odporů,
+</div></li>
+<li class="level1"><div class="li">
+ <code>OTYPER</code> výběr mezi typem výstupu (push-pull, otevřený kolektor),
+</div></li>
+<li class="level1"><div class="li">
+ <code>OSPEEDR</code> výběr rychlosti pinu, nastavujeme podle očekáváné maximální frekvence spínání,
+</div></li>
+<li class="level1"><div class="li">
+ <code>ODR</code> výstupní registr, hodnota na pinu je dána hodnotou příslušného bitu,
+</div></li>
+<li class="level1"><div class="li">
+ <code>IDR</code> vstupní registr, logická hodnota čtená na daném pinu,
+</div></li>
+<li class="level1"><div class="li">
+ <code>BSRR</code> pomocný registr pro atomické nastavení, zápisem do spodních 16ti bitů nastavíme příslušný bit v <code>ODR</code> (a tedy i pin na logickou 1), zápisem do horních 16ti bitů vyčistíme příslušný bit v <code>ODR</code>.
+</div></li>
+</ul>
+
+
+<p>
+<span id="img_stm32f4_gpio_moder" class="imgcaption">
+<a href="https://cw.fel.cvut.cz/wiki/_detail/courses/amp_mam/labs/stm32f4_gpio_moder.jpg?id=courses%3Aamp_mam%3Alabs%3A02" class="media" title="courses:amp_mam:labs:stm32f4_gpio_moder.jpg"><img src="img/stm32f4_gpio_moder.jpg" class="mediacenter" title="GPIO MODER registr" alt="GPIO MODER registr" width="600" /></a>
+<span class="undercaption">
+	Fig. 4:  GPIO MODER registr <a href=" "><span></span></a>
+</span>
+</span>
+</p>
+
+<p>
+Například, nastavení pinu PA5 na výstup s otevřeným kolektorem (OC) se provede následovně.
+<pre class="code c">  RCC<span class="sy0">-&gt;</span>AHB1ENR <span class="sy0">|=</span> RCC_AHB1ENR_GPIOAEN<span class="sy0">;</span> <span class="co1">// Zapni hodiny GPIOA</span>
+&nbsp;
+  GPIOA<span class="sy0">-&gt;</span>OTYPER <span class="sy0">|=</span> GPIO_OTYPE_OT5<span class="sy0">;</span> <span class="co1">// Nastav pin na OC</span>
+&nbsp;
+  GPIOA<span class="sy0">-&gt;</span>MODER <span class="sy0">&amp;=</span> ~<span class="br0">&#40;</span>GPIO_MODER_MODE5_Msk<span class="br0">&#41;</span><span class="sy0">;</span>
+  GPIOA<span class="sy0">-&gt;</span>MODER <span class="sy0">|=</span> <span class="nu0">1</span> <span class="sy0">&lt;&lt;</span> GPIO_MODER_MODE5_Pos<span class="sy0">;</span> <span class="co1">// A az potom zmen jeho mod/rezim</span></pre>
+
+</p>
+<div class="plugin_note noteimportant">Změnou registru <code>MODER</code> se okamžitě změní funkce pinu. Pokud například nastavíme režim pinu na AF a teprve pak budeme manipulovat s registrem <code>AFRL</code> nebo <code>AFRH</code>, mohou se na pinech objevit zákmity, které mohou zmást okolní obvody (například SPI komunikaci). Doporučujeme tak změnu módu provést až po nastavení zbylých registrů.
+</div>
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Generic Purpose Input Output (GPIO)&quot;,&quot;hid&quot;:&quot;generic_purpose_input_output_gpio&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:9,&quot;range&quot;:&quot;8264-10983&quot;} -->
+<h3 class="sectionedit10" id="preruseni">Přerušení</h3>
+<div class="level3">
+
+<p>
+Přerušení (<em>interrupt</em>) je mechanismus, který umožní procesoru přerušit vykonávání aktuální kódu a reagovat na zdroj přerušení.
+V momentě kdy procesor detekuje přerušení dojde k:
+</p>
+<ol>
+<li class="level1"><div class="li">
+ uložení veškerá práce vložením registrů na zásobník (<em>context save</em>),
+</div></li>
+<li class="level1"><div class="li">
+ spuštění obsluhy přerušení (<em>interrupt handler</em>, <em>interrupt service routine</em>),
+</div></li>
+<li class="level1"><div class="li">
+ obnovení práce po návratu z obsluhy obnovením hodnot registrů ze zásobníku (<em>context restore</em>).
+</div></li>
+</ol>
+
+
+<p>
+Pseudokód tohoto algoritmu procesoru je níže.
+<pre class="code pascal">  <span class="kw1">while</span> <span class="kw2">true</span>
+    <span class="kw1">if</span> <span class="kw1">interrupt</span>
+      save_context<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy1">;</span>
+      isr<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy1">;</span>
+      restore_context<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy1">;</span>
+    <span class="kw1">end</span> <span class="kw1">if</span>
+&nbsp;
+    process_instruction<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy1">;</span>
+  <span class="kw1">end</span> <span class="kw1">while</span></pre>
+
+</p>
+
+<p>
+Zdroje přerušení můžou být:
+</p>
+<ul>
+<li class="level1"><div class="li">
+ interní (systémové), týkající se jádra a jeho funkce, například reset, kritická obecná chyba (<em>hard fault</em>), chyba přístupu k paměti (<em>MemManage</em>), atp. [<a href='/wiki/bib?file=amp_mam&amp;ref=STM32F4_RM'>STM32F4_RM</a>] (sekce 10), 
+</div></li>
+<li class="level1"><div class="li">
+ externí, vyvolané některou periférií, například časovačem, příjmem bytu, stisk tlačítka a podobně.
+</div></li>
+</ul>
+
+
+<p>
+Počet různých přerušení je omezený (například maximálně 224) a procesorech ARM Cortex-M se o jejich správu stará část procesoru <em>Nested Vector Interrupt Controller</em> (NVIC).
+NVIC se také stará o priority přerušení a tím umožní stanovit, které přerušení má vyšší prioritu než jiné.
+V případě STM32F4 má NVIC celkem 52 maskovatelných kanálů (tzn. různých přerušení, které lze zapnout) a 16 úrovní přerušení (4 bity).
+Přerušení a jejich výchozí priority popisuje tabulka 38 [<a href='/wiki/bib?file=amp_mam&amp;ref=stm32f4_rm'>stm32f4_rm</a>] (kapitola 10, strana 202).
+</p>
+
+<p>
+Když nastane přerušení, NVIC zjistí jeho prioritu. Pokud je právě obsluhováno jiné přerušení, pak NVIC porovná jejich priority a pokud má nové přerušení vyšší prioritu, tak se zpracování přerušení s nižší prioritou pozastaví.
+V opačném případě se přerušení nastaví <em>Pending bit</em> a čeká se na dokončení přerušení s vyšší prioritou.
+Obslužná rutina se vybere na základě adresy v tabulce vektorů, která je umístěna na počátku programové paměti (viz. adresy v tabulce 38).
+</p>
+<div class="plugin_note notetip">Jména obslužných rutin jsou uvedena v souboru s vektorovou tabulkou (například <code>stm32f401xe_vectors.s</code>).
+</div>
+<p>
+Pro aktivování přerušení je třeba jej v NVIC povolit a definovat obslužnou funkci.
+Abychom se vyhnuli okamžitému volání obslužné funkce (například po restartu), je vhodné před povolením vyčistit případný <em>pending bit</em> funkcí <code>NVIC_ClearPendingIRQ()</code>.
+Níže je příklad zapnutí přerušení pro Systémový časovač (SYSTICK).
+<pre class="code c"><span class="co2">#include &quot;stm32f4xx.h&quot;</span>
+&nbsp;
+<span class="co1">// Obsluha preruseni SysTick</span>
+<span class="kw4">void</span> SysTick_Handler<span class="br0">&#40;</span><span class="kw4">void</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+&nbsp;
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw4">int</span> main<span class="br0">&#40;</span><span class="kw4">void</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="co1">// kod</span>
+  NVIC_ClearPendingIRQ<span class="br0">&#40;</span>SysTick_IRQn<span class="br0">&#41;</span><span class="sy0">;</span>
+  NVIC_EnableIRQ<span class="br0">&#40;</span>SysTick_IRQn<span class="br0">&#41;</span><span class="sy0">;</span>
+  <span class="co1">// vice kodu</span>
+  <span class="kw1">return</span> <span class="nu0">0</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+
+</p>
+
+</div>
+
+<h4 id="external_interruptevent_controller_exti">External Interrupt/Event Controller (EXTI)</h4>
+<div class="level4">
+
+<p>
+EXTI zastřešuje správu přerušení z GPIO pinů.
+Pomocí EXTI lze reagovat na náběžnou hranu, sestupnou hranu či oboje na kterémkoliv z dostupných pinů.
+EXTI má 23 kanálů, 16 pro piny, zbylých 7 pro RTC a další události.
+</p>
+
+<p>
+<span id="img_stm32f4_exti_diagram" class="imgcaption">
+<a href="https://cw.fel.cvut.cz/wiki/_detail/courses/amp_mam/labs/stm32f4_exti_diagram.jpg?id=courses%3Aamp_mam%3Alabs%3A02" class="media" title="courses:amp_mam:labs:stm32f4_exti_diagram.jpg"><img src="img/stm32f4_exti_diagram.jpg" class="mediacenter" title="EXTI blokový diagram" alt="EXTI blokový diagram" width="600" /></a>
+<span class="undercaption">
+	Fig. 5:  EXTI blokový diagram <a href=" "><span></span></a>
+</span>
+</span>
+</p>
+
+<p>
+Propojení EXTI a GPIO pinů je omezeno.
+Každý ze 16 kanálů je možno připojit pouze k jednomu z pinů s daným číslem.
+To znamená, že k EXTI kanálu 0 lze připojit jeden z {PA0, PB0, PC0,…}, k EXTI kanálu 1 zase jeden z {PA1, PB1, PC1, …} a tak dále.
+V důsledku nelze sledovat přerušení najednou z PA0 a PB0.
+Připojení GPIO pinu k EXTI kanálu je realizován multiplexorem.
+Řídicí signály multiplexerů, které vyberou GPIO bránu, jsou dány obsahem registrů periferie systémové konfigurace (SYSCFG) <code>SYSCFG→EXTICR1</code> až <code>SYSCFG→EXTICR4</code>(<code>SYSCFG</code> je třeba zapnout hodiny před použitím).
+Schéma multiplexorů je na obrázku <a href="labs_02.html#img_stm32f4_exti_mux">figure&nbsp;6</a>.
+</p>
+
+<p>
+<span id="img_stm32f4_exti_mux" class="imgcaption">
+<a href="https://cw.fel.cvut.cz/wiki/_detail/courses/amp_mam/labs/stm32f4_exti_mux.jpg?id=courses%3Aamp_mam%3Alabs%3A02" class="media" title="courses:amp_mam:labs:stm32f4_exti_mux.jpg"><img src="img/stm32f4_exti_mux.jpg" class="mediacenter" title="Multiplexory, které připojují GPIO piny k EXTI kanálu." alt="Multiplexory, které připojují GPIO piny k EXTI kanálu." width="400" /></a>
+<span class="undercaption">
+	Fig. 6:  Multiplexory, které připojují GPIO piny k EXTI kanálu. <a href=" "><span></span></a>
+</span>
+</span>
+</p>
+
+<p>
+Nastavení typu sledované hrany se nachází v registrech <code>EXTI→RTSR</code> (<em>Rising Trigger Selection Register</em>) a <code>EXTI→FTSR</code> (<em>Falling Trigger Selection Register</em>).
+Pokud chceme, aby EXTI kanál generoval přerušení, musíme jej povolit jak v NVIC, tak i v registru <code>EXTI→IMR</code> (<em>Interrupt Mask Register</em>).
+</p>
+
+<p>
+V momentě kdy dojde ke sledované události, bude nastaven příslušný bit v <em>Pending</em> registru <code>EXTI→PR</code>.
+Bit je hardwarem pouze nastavován a abychom po zpracování události mohli čekat na další, je třeba jej vyčistit.
+Způsob vyčištění bitu se u každá periferie liší a postup je vždy uveden v popisu registru v referenčním manuálu.
+V případě EXTI je bit vyčištěn zápisem jedničky, například:
+<pre class="code c">  EXTI<span class="sy0">-&gt;</span>PR <span class="sy0">|=</span> EXTI_PR_PR0<span class="sy0">;</span></pre>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;P\u0159eru\u0161en\u00ed&quot;,&quot;hid&quot;:&quot;preruseni&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:10,&quot;range&quot;:&quot;10984-16050&quot;} -->
+<h3 class="sectionedit11" id="sedmisegmentovy_displej">Sedmisegmentový displej</h3>
+<div class="level3">
+
+<p>
+Na rozšiřující desce je sedmisegmentový display o 4 číslicích (digitech).
+Každý digit má 7 LEDek, označené písmeny A až G, a jednu LEDku, označenou jako H nebo DP, pro desetinnou tečku.
+<span id="img_seven_segment_order" class="imgcaption">
+<a href="https://cw.fel.cvut.cz/wiki/_detail/courses/amp_mam/labs/seven_segment.png?id=courses%3Aamp_mam%3Alabs%3A02" class="media" title="courses:amp_mam:labs:seven_segment.png"><img src="img/seven_segment.png" class="mediacenter" title="Pojmenování segmentů zobrazovače" alt="Pojmenování segmentů zobrazovače" width="200" /></a>
+<span class="undercaption">
+	Fig. 7:  Pojmenování segmentů zobrazovače <a href=" "><span></span></a>
+</span>
+</span>
+</p>
+
+<p>
+Tento konkrétní displej má LEDky v zapojení společné katody, která je uzemněná. Jednotlivé segmenty se tedy zapínají přivedením napětí na piny (logická jednička).
+LEDky potřebují dostatečný proud (například 10 mA) k tomu aby svítily. Procesor nedokáže poskytnout dost proudu pro všechny LEDky bez (trvalého) poškození.
+K jeho ochraně je na desce budič (<em>buffer</em>, <em>driver</em>), který jednak dokáže bez problému dodat dost proudu a zároveň provádí převod mezi 3,3 V logikou procesoru a 5 V.
+</p>
+
+<p>
+K ovládání jednoho digitu je třeba 8 pinů, jeden pro každý segment.
+Pokud bychom chtěli nezávisle řídit každý digit, pak bychom potřebovali celkem 32 pinů!
+Tento přístup je dost plýtvavý a zbytečně bychom využili skoro každý dostupný pin mikrokontroléru.
+Proto se využívají posuvné registry (<em>shift register</em>) a expandéry (<em>io expander</em>), do kterých je možné “uložit” stav pinů a ten přenést po podstatně méně vodičích (například 3).
+</p>
+
+<p>
+Tak je tomu i na naší rozšiřující desce, kde jsou 2 8bitové posuvné registry, jeden pro ovládání segmentů a jeden pro zapínání digitů.
+Cenou za tento přístup je ten, že nelze digity ovládat nezávisle.
+Toto však nevadí, když v jeden moment bude svítit vždy jeden digit a budeme mezi digity přepínat tak rychle, že se bude zdát, že svítí všechny najednou.
+Ovládání tedy rozdělíme tzv. časovým multiplexem (<em>time multiplex</em>).
+</p>
+
+<p>
+Data do posuvného registru dostaneme pomocí vodičů DATA, SHCP (<em>shift clock</em>, posunutí dat) a STCP (<em>store clock</em>, uložení a zobrazení dat).
+Celou 16bitovou informaci, kde v horních 8 bitech (konkrétně 8.-11. bit) je výběr digitu a ve spodních 8mi je výběr segmentů, pak postupně “naposouváme” bit po bitu z procesoru do posuvného registru.
+Pořadí vysílání bitů je <em>Most Significant Bit First</em> (MSB), tedy nejvyšší bit je odeslán jako první.
+Struktura dat a časový diagram komunikace s posuvným registrem je na obrázku <a href="labs_02.html#img_segment_timing">figure&nbsp;8</a>.
+</p>
+
+<p>
+<span id="img_segment_timing" class="imgcaption">
+<a href="https://cw.fel.cvut.cz/wiki/_detail/courses/amp_mam/labs/seven.segment-timing.jpg?id=courses%3Aamp_mam%3Alabs%3A02" class="media" title="courses:amp_mam:labs:seven.segment-timing.jpg"><img src="img/seven.segment-timing.jpg" class="mediacenter" title="Časování komunikace se 7-segmentovým displejem" alt="Časování komunikace se 7-segmentovým displejem" width="600" /></a>
+<span class="undercaption">
+	Fig. 8:  Časování komunikace se 7-segmentovým displejem <a href=" "><span></span></a>
+</span>
+</span>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Sedmisegmentov\u00fd displej&quot;,&quot;hid&quot;:&quot;sedmisegmentovy_displej&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:11,&quot;range&quot;:&quot;16051-18728&quot;} -->
+<h3 class="sectionedit12" id="na_zamysleni">Na zamyšlení</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li">
+ Jak rychle musíme přepínat mezi digity aby zdánlivě neblikal?
+</div></li>
+</ul>
+
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Na zamy\u0161len\u00ed&quot;,&quot;hid&quot;:&quot;na_zamysleni&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:12,&quot;range&quot;:&quot;18729-&quot;} --></div>
+</body>
+</html>

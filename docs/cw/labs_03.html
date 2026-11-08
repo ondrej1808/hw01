@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<style>body{font-family:sans-serif;max-width:60em;margin:1em auto;padding:0 1em}table{border-collapse:collapse}td,th{border:1px solid #999;padding:2px 6px}pre{background:#f4f4f4;padding:.5em;overflow:auto}img{max-width:100%}</style>
+<!-- offline kopie https://cw.fel.cvut.cz/wiki/courses/amp_mam/labs/03 -->
+  <meta charset="utf-8" />
+  <title>courses:amp_mam:labs:03</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="theme-color" content="#0065bd"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="courses,amp mam,labs,03"/>
+<link rel="search" type="application/opensearchdescription+xml" href="https://cw.fel.cvut.cz/wiki/lib/exe/opensearch.php" title="CourseWare Wiki"/>
+<link rel="start" href="https://cw.fel.cvut.cz/wiki/"/>
+<link rel="manifest" href="https://cw.fel.cvut.cz/wiki/lib/exe/manifest.php"/>
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="https://cw.fel.cvut.cz/wiki/feed.php"/>
+<link rel="alternate" type="application/rss+xml" title="Current namespace" href="https://cw.fel.cvut.cz/wiki/feed.php?mode=list&ns=courses:amp_mam:labs"/>
+<link rel="alternate" type="text/html" title="Plain HTML" href="https://cw.fel.cvut.cz/wiki/_export/xhtml/courses/amp_mam/labs/03"/>
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="https://cw.fel.cvut.cz/wiki/_export/raw/courses/amp_mam/labs/03"/>
+<link rel="canonical" href="labs_03.html"/>
+
+<!--[if gte IE 9]><!-->
+
+
+
+<script type="text/x-mathjax-config">/*<![CDATA[*/MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+        displayMath: [ ["$$","$$"], ["\\[","\\]"] ],
+        processEscapes: true
+    },
+    TeX: { equationNumbers: {autoNumber: "AMS"} }
+});
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="https://cw.fel.cvut.cz/mathjax/mathjax/MathJax.js?config=TeX-AMS_CHTML.js"></script>
+<!--<![endif]-->
+</head>
+<body>
+<div class="dokuwiki export">
+<!-- TOC START -->
+<div id="dw__toc" class="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#casovac">3. Časovač</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#priprava_na_cviceni">Příprava na cvičení</a></div></li>
+<li class="level2"><div class="li"><a href="#ukoly_na_cviceni">Úkoly na cvičení</a></div></li>
+<li class="level2"><div class="li"><a href="#ukoly_na_doma">Úkoly na doma</a></div></li>
+<li class="level2"><div class="li"><a href="#popis">Popis</a></div>
+<ul class="toc">
+<li class="level3"><div class="li"><a href="#modularita_kodu">Modularita kódu</a></div></li>
+<li class="level3"><div class="li"><a href="#casovace">Časovače</a></div></li>
+<li class="level3"><div class="li"><a href="#alternativni_funkce_gpio_pinu">Alternativní funkce GPIO pinu</a></div></li>
+<li class="level3"><div class="li"><a href="#morseuv_kod">Morseův kód</a></div></li>
+<li class="level3"><div class="li"><a href="#periodicke_ulohy">Periodické úlohy</a></div></li>
+<li class="level3"><div class="li"><a href="#otazky_k_zamysleni">Otázky k zamyšlení</a></div></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<h1 class="sectionedit1" id="casovac">3. Časovač</h1>
+<div class="level1">
+<div class="table sectionedit2"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Kompetence   </th><td class="col1"> Členění projektu, Přerušení, Generování signálů, Stavové automaty, Propojení periferie s okolními obvody, Přidání modulu do projektu </td>
+	</tr>
+	<tr class="row1">
+		<th class="col0"> Periferie </th><td class="col1"> <em>TIM, SYSTICK</em>, NVIC, GPIO, RCC, jádro </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0"> Kostra kódu </th><td class="col1"> <a href="media/03_timer-template.zip" class="media mediafile mf_zip" title="courses:amp_mam:labs:codes:03_timer-template.zip (187 KB)"> 03_timer-template.zip</a> </td>
+	</tr>
+	<tr class="row3">
+		<th class="col0 leftalign">  </th><td class="col1"> <a href="media/morse-template.zip" class="media mediafile mf_zip" title="courses:amp_mam:labs:codes:morse-template.zip (2.1 KB)"> morse-template.zip</a> </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0"> Prezentace </th><td class="col1"> Prezentace </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:2,&quot;range&quot;:&quot;29-460&quot;} -->
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;3. \u010casova\u010d&quot;,&quot;hid&quot;:&quot;casovac&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-461&quot;} -->
+<h2 class="sectionedit3" id="priprava_na_cviceni">Příprava na cvičení</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li">
+ Kapitoly v datovém listu a manuálu
+</div><ul>
+<li class="level2"><div class="li">
+ <a href="media/stm32f401_refmanual.pdf#page=146" class="media mediafile mf_pdf" title="courses:amp_mam:pdf:stm32f401_refmanual.pdf (9.6 MB)">RM: Kapitola 8 (GPIO)</a>
+</div></li>
+<li class="level2"><div class="li">
+ <a href="media/stm32f401_refmanual.pdf#page=243" class="media mediafile mf_pdf" title="courses:amp_mam:pdf:stm32f401_refmanual.pdf (9.6 MB)">RM: Kapitola 12 (TIM1)</a>
+</div></li>
+<li class="level2"><div class="li">
+ <a href="media/stm32f401re_datasheet.pdf#page=45" class="media mediafile mf_pdf" title="courses:amp_mam:pdf:stm32f401re_datasheet.pdf (2 MB)">DS: Mapování pinů na periferie (Alternativní funkce)</a>
+</div></li>
+<li class="level2"><div class="li">
+ <a href="media/cortex-m4_generic_user_guide.pdf#page=219" class="media mediafile mf_pdf" title="courses:amp_mam:pdf:cortex-m4_generic_user_guide.pdf (1.7 MB)"> Jádro ARM M4 (NVIC)</a>
+</div></li>
+</ul>
+</li>
+<li class="level1"><div class="li">
+ Kapitoly v přednáškách
+</div><ul>
+<li class="level2"><div class="li">
+ <a href="media/amp-skripta-2026.pdf#page=39" class="media mediafile mf_pdf" title="courses:amp_mam:lectures:amp-skripta-2026.pdf (11.6 MB)">Skripta: 2. Čas, hodiny a periferie</a>
+</div></li>
+<li class="level2"><div class="li">
+ <a href="https://cw.fel.cvut.cz/wiki/courses/amp_mam/lectures/start#cas_hodiny_a_periferie" class="wikilink1" title="courses:amp_mam:lectures:start">Přednáška: 2. Čas, hodiny a periferie</a>
+</div></li>
+</ul>
+</li>
+<li class="level1"><div class="li">
+ Užitečné odkazy
+</div><ul>
+<li class="level2"><div class="li">
+ <a href="https://en.wikipedia.org/wiki/Morse_code#Development_and_history" class="urlextern" title="https://en.wikipedia.org/wiki/Morse_code#Development_and_history" rel="nofollow">Morse code na Wikipedii</a>
+</div></li>
+</ul>
+</li>
+</ul>
+
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;P\u0159\u00edprava na cvi\u010den\u00ed&quot;,&quot;hid&quot;:&quot;priprava_na_cviceni&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;462-1303&quot;} -->
+<h2 class="sectionedit4" id="ukoly_na_cviceni">Úkoly na cvičení</h2>
+<div class="level2">
+<ol>
+<li class="level1"><div class="li">
+ osvojit si modulární přístup k psaní kódu
+</div></li>
+<li class="level1"><div class="li">
+ seznámit se s periferií časovače a jeho režimy činnosti
+</div></li>
+<li class="level1"><div class="li">
+ generovat signál pomocí TIMERu na pinu <code>PWM_OUT</code> (PA8, <code>TIM_CH1</code>)
+</div></li>
+<li class="level1"><div class="li">
+ použít SYSTICK pro spouštění periodických úloh
+</div></li>
+<li class="level1"><div class="li">
+ implementovat vysílání morseova kódu
+</div></li>
+</ol>
+
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u00dakoly na cvi\u010den\u00ed&quot;,&quot;hid&quot;:&quot;ukoly_na_cviceni&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;1304-1634&quot;} -->
+<h2 class="sectionedit5" id="ukoly_na_doma">Úkoly na doma</h2>
+<div class="level2">
+<ol>
+<li class="level1"><div class="li">
+ generujte slyšitelný tón pomocí TIMERu na pinu <code>BUZZER_OUT</code> (PA11, <code>TIM1_CH4</code>)
+</div></li>
+<li class="level1"><div class="li">
+ převeďte funkce pro obsluhu displeje do samostatného modulu, navrhněte strukturu pro uchování dat úlohy (podobně jako u úlohy morse)
+</div></li>
+<li class="level1"><div class="li">
+ (volitelné) doplňte morseovu abecedu o další znaky, například čísla
+</div></li>
+<li class="level1"><div class="li">
+ (volitelné) použijte časovač k ovládání jasu dynamického displeje (zaměřte se na zapojení U4)
+</div></li>
+</ol>
+
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u00dakoly na doma&quot;,&quot;hid&quot;:&quot;ukoly_na_doma&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;1635-2089&quot;} -->
+<h2 class="sectionedit6" id="popis">Popis</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Popis&quot;,&quot;hid&quot;:&quot;popis&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;2090-2108&quot;} -->
+<h3 class="sectionedit7" id="modularita_kodu">Modularita kódu</h3>
+<div class="level3">
+
+<p>
+S rostoucím projektem, roste i množství napsaného kódu.
+Psát vše do jednoho hlavní ho souboru/modulu (.c + .h soubor) se velice rychle stává nepřehledné a nepraktické.
+Dává tak smysl sdružovat spolu související deklarace a definice do vlastních souborů, například <code>driver.h</code> pro deklarace a <code>driver.c</code> pro definice.
+Kompilátor převede každý modul na samostatný objektový soubor, například <code>driver.o</code>.
+Potřebné části kódu pak připojíme direktivou <code>#include “driver.h”</code> ve zdrojovém souboru a linker pak spojí všechny potřebné objektové soubory do jednoho finálního spustitelného souboru (<code>app.elf</code>, <code>app.bin</code> nebo <code>app.hex</code>).
+</p>
+
+<p>
+Rozdělení kódu do modulů má mnoho výhod.
+Kód je díky tomu mnohem přehlednější, neboť související části kódu jsou pohromadě.
+Oddělenost jednotek, čili modularita, pak umožňuje jednak jednoduše sdílet části kódu mezi projekty či nahradit kteroukoliv část alternativní implementací.
+Například, jeden typický způsob je oddělit kód/logiku aplikace od kódu, který se stará o hardware, jak je ukázáno na obrázku <a href="labs_03.html#img_modularity">figure&nbsp;1</a>.
+Aplikační kód je nezávislý na konkrétním HW, zatímco ovladač je specifický pro daný hardware a platformu.
+Mezi aplikací a ovladači může navíc být vrstva platformě nezávislých nástrojů (<em>tools</em>), které poskytují různé algoritmy nebo abstraktní datové typy (například FIFO frontu, algoritmy, FFT, pomocné funkce,…).
+Aplikační kód a nástroje jsou v tomto případně tzv. přenositelný mezi platformami.
+Aplikace pak “sedí” nad ovladačem (nižšími vrstvami), se kterým komunikuje pomocí definovaného rozhraní (<em>interface</em>).
+Tomuto se říká <strong>abstrakce</strong> hardware.
+Pro “zaručení” modularity je třeba dbát na způsob volání a komunikace mezi vrstvami a to, že:
+</p>
+<ul>
+<li class="level1"><div class="li">
+ směrem “dolů” se volá (přímé použití funkcí, například <code>driver_do_something()</code>),
+</div></li>
+<li class="level1"><div class="li">
+ směrem “nahoru” se signalizuje (nastavení příznaku, který vyšší vrstva čte, například <code>driver_status = DRIVER_OK</code>).
+</div></li>
+</ul>
+
+
+<p>
+Je to podobné například mechanizmu signálů v Qt, kde se směrem “nahoru” signalizovalo emitováním signálu.
+</p>
+
+<p>
+<span id="img_modularity" class="imgcaption">
+<a href="https://cw.fel.cvut.cz/wiki/_detail/courses/amp_mam/labs/module_layers.jpg?id=courses%3Aamp_mam%3Alabs%3A03" class="media" title="courses:amp_mam:labs:module_layers.jpg"><img src="img/module_layers.jpg" class="mediacenter" title="Modulárnost kódu, rozdělení na nezávislé vrstvy." alt="Modulárnost kódu, rozdělení na nezávislé vrstvy." width="600" /></a>
+<span class="undercaption">
+	Fig. 1:  Modulárnost kódu, rozdělení na nezávislé vrstvy. <a href=" "><span></span></a>
+</span>
+</span>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Modularita k\u00f3du&quot;,&quot;hid&quot;:&quot;modularita_kodu&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;2109-4551&quot;} -->
+<h3 class="sectionedit8" id="casovace">Časovače</h3>
+<div class="level3">
+
+<p>
+Časovače slouží k přesnému odměřování času, ať už pro účely zpoždění úkonů, pravidelnému spouštění úloh či prostému měření času.
+Časovače mohou též měřit uběhnutý čas mezi dvěma událostmi.
+Podle použití se používají pojmy časovač (<em>timer</em>) a čítač (<em>counter</em>):
+</p>
+<ul>
+<li class="level1"><div class="li">
+ časovač k odměřování časového intervalu,
+</div></li>
+<li class="level1"><div class="li">
+ čítač k počítání událostí.
+</div></li>
+</ul>
+
+
+<p>
+Časovač SYSTICK je interní časovač ARM jádra a má ho tedy každý procesor.
+V tabulce vektorů se nachází na 6. místě; ve výchozím stavu tak má prioritu vyšší než kterékoli jiné přerušení či periferie od výrobce čipu.
+SYSTICK je proto používán pro generování zpoždění nebo pro pravidelné spouštění plánovače úloh v RTOS (na toto téma se zaměříme na pozdějším <a href="labs_08.html" class="wikilink1" title="courses:amp_mam:labs:08">cvičení</a>).
+</p>
+
+<p>
+Aktivace SYSTICK se provádí funkcí <code>SysTick_Config(ticks)</code> z CMSIS, jejíž parametrem je počet tiků na na periodu.
+Příklad zapnutí SYSTICKu s frekvencí jedné milisekundy k měření systémového času je uveden níže.
+</p>
+
+<p>
+<pre class="code c"><span class="kw4">static</span> <span class="kw4">uint32_t</span> uiSysTick<span class="sy0">;</span>
+<span class="kw4">void</span> SysTick_Handler<span class="br0">&#40;</span><span class="kw4">void</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="sy0">++</span>uiSysTick<span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw4">int</span> main<span class="br0">&#40;</span><span class="kw4">void</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="coMULTI">/* kód */</span>
+  uiSysTick <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="kw1">if</span><span class="br0">&#40;</span>SysTick_Config<span class="br0">&#40;</span>SystemCoreClock <span class="sy0">/</span> 1000u<span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="coMULTI">/* nastaveni periody na 1 ms (1000 Hz) */</span>
+  <span class="br0">&#123;</span>
+    <span class="coMULTI">/* zachyt chybu */</span>
+    <span class="kw1">while</span> <span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+      <span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+  NVIC_SetPriority<span class="br0">&#40;</span>SysTick_IRQn<span class="sy0">,</span> <span class="nu0">5</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="coMULTI">/* zmen prioritu na 5 */</span>
+  <span class="coMULTI">/* více kódu */</span>
+<span class="br0">&#125;</span></pre>
+
+</p>
+
+<p>
+Diagram periferie časovače v STM32F4 je na obrázku <a href="labs_03.html#img_timer_diagram">figure&nbsp;2</a>.
+Mezi hlavní registry časovače patří:
+</p>
+<ul>
+<li class="level1"><div class="li">
+ <code>Control Register 1 (CR1)</code>, zapíná časovač, nastavuje směr počítání, řídí bufferování registrů,…,
+</div></li>
+<li class="level1"><div class="li">
+ <code>DMA/Interrupt Enable Register (DIER)</code>, povoluje události časovače (mohou generovat přerušení),
+</div></li>
+<li class="level1"><div class="li">
+ <code>Status Register (SR)</code>, říká, ke kterým událostem časovače došlo,
+</div></li>
+<li class="level1"><div class="li">
+ <code>Auto Reload Register (ARR)</code>, určuje maximální hodnotu časovače,
+</div></li>
+<li class="level1"><div class="li">
+ <code>Prescaler (PSC)</code>, nastavuje před-děličku hodin časovače,
+</div></li>
+<li class="level1"><div class="li">
+ <code>Count (CNT)</code>, drží aktuální stav,
+</div></li>
+<li class="level1"><div class="li">
+ <code>Capture Compare Mode Register (CCMR)</code> nastavení záchytného/porovnávacího kanálu,
+</div></li>
+<li class="level1"><div class="li">
+ <code>Capture Compare Enable Register (CCER)</code> povolení záchytného/porovnávacího kanálu,
+</div></li>
+<li class="level1"><div class="li">
+ <code>Capture Compare Register (CCR)</code> drží hodnotu, která je porovnávána s <code>TIM→CNT</code> v případě porovnávacího kanálu; v případě záchytného kanálu zde najdeme hodnotu <code>TIM→CNT</code> v okamžiku záchytu.
+</div></li>
+</ul>
+
+
+<p>
+<span id="img_timer_diagram" class="imgcaption">
+<a href="https://cw.fel.cvut.cz/wiki/_detail/courses/amp_mam/labs/stm32f4_timer_diagram.jpg?id=courses%3Aamp_mam%3Alabs%3A03" class="media" title="courses:amp_mam:labs:stm32f4_timer_diagram.jpg"><img src="img/stm32f4_timer_diagram.jpg" class="mediacenter" title="Blokový diagram časovače v STM32F4." alt="Blokový diagram časovače v STM32F4." width="800" /></a>
+<span class="undercaption">
+	Fig. 2:  Blokový diagram časovače v STM32F4. <a href=" "><span></span></a>
+</span>
+</span>
+</p>
+
+<p>
+Časovač počítá od 0 do hodnoty v <code>TIM→ARR</code> (směr lze změnit v registru <code>TIM→CR1</code>) s frekvencí $f_{tim}$.
+Frekvence časovače $f_{tim}$ je odvozena od $f_{APBx}$ po průchodu předděličkou časovače s dělícím faktorem <code>TIM→PSC + 1</code>.
+Pozor, $f_{APBx}$ může být ještě před časovačem zpomalena předděličkou či dvojnásobně zrychlena, viz. <code>RCC</code> schéma ve cvičení <a href="labs_02.html" class="wikilink1" title="courses:amp_mam:labs:02">GPIO a přerušení</a>.
+Registry <code>TIM→ARR</code> a <code>TIM→PSC</code> tak určují periodu, neboli časovou základnu, časovače.
+Ta je dána vztahem $T = \frac{(PSC + 1)\cdot(ARR + 1)}{f_{APBx}}$
+</p>
+<div class="plugin_note noteimportant">Při změně hodnoty registru <code>TIM→ARR</code> běžícího časovače je třeba postupovat opatrně. Může se stát, že nová hodnota <code>TIM→ARR</code> bude nižší než <code>TIM→CNT</code>. V takovém případě časovač pokračuje do své fyzicky maximální hodnoty (například $2^{16}$), dokud nepřeteče, což může zásadně protáhnout jeho periodu.
+Proto je možné obsah registru <code>TIM→ARR</code> bufferovat (nastavení v registru <code>TIM→CR1</code>), kdy nová hodnota je aplikována až když časovač dokončí aktuální periodu (přesněji s dalším <em>update</em> událostí).
+</div>
+<p>
+Časovač typicky provozujeme v režimech [<a href='/wiki/bib?file=amp_mam&amp;ref=STM32F4_RM'>STM32F4_RM</a>]:
+</p>
+<ul>
+<li class="level1"><div class="li">
+ periodický, časovač běží mezi 0 a <code>ARR</code> (událost přetečení <em>overflow</em> či <em>update</em>),
+</div></li>
+<li class="level1"><div class="li">
+ záchytný režim (<em>Input Capture</em>), jako periodický, ale navíc je sledován kanál <code>n</code> časovače na sestupnou či náběžnou hranu, v momentě, kdy k tomu dojde, tak se uloží aktuální hodnota <code>TIM→CNT</code> do registru <code>TIM→CCRn</code> (sekce 13.3.5),
+</div></li>
+<li class="level1"><div class="li">
+ porovnávací režim (<em>Output Compare</em>), jako periodický, ale navíc porovnává <code>TIM→CNT</code> s hodnotou v <code>TIM→CCRn</code>, podle konfigurace je pak nastavována log. 0 nebo 1 na kanálu časovače <code>n</code>. tento režim se používá například ke generování a řízení PWM (sekce 13.3.8 a 13.3.9).
+</div></li>
+</ul>
+
+
+<p>
+Komparační režim můžeme použít například pro blikání LEDkou.
+V tomto příkladu bude LEDka připojena ke kanálu 4 časovače <code>TIM3</code> (<code>TIM3_CH4</code>).
+Pomocí registrů <code>TIM→PSC</code> a <code>TIM→ARR</code> stanovíme frekvenci blikání, například na 2 Hz, přičemž frekvence $f_{tim}$ je 16 <abbr title="Megahertz">MHz</abbr>.
+Kanál 4 nastavíme do komparačního režimu, konkrétně do PWM módu, kdy <code>CH4</code> je aktivní když platí <code>TIM→CNT &lt; TIM→CCR4</code>, toto nastavení je v <code>TIM→CCMR2</code>
+V registru <code>TIM→CCER</code> bity <code>CC4P</code> určují, s jakou logickou úrovní koresponduje aktivní kanál a 
+Hodnotou v <code>TIM→CCR4</code> stanovíme, jak dlouho bude v každé periodě LEDka svítit.
+</p>
+
+<p>
+<pre class="code c">  TIM3<span class="sy0">-&gt;</span>PSC <span class="sy0">=</span> <span class="nu0">8000</span> <span class="sy0">-</span> <span class="nu0">1</span><span class="sy0">;</span> <span class="coMULTI">/* 16 MHz / (8000 - 1 + 1) = 2 kHz */</span>
+  TIM3<span class="sy0">-&gt;</span>ARR <span class="sy0">=</span> <span class="nu0">1000</span> <span class="sy0">-</span> <span class="nu0">1</span><span class="sy0">;</span> <span class="coMULTI">/* 2 kHz / (1000 - 1 + 1) = 2 Hz */</span>
+  TIM3<span class="sy0">-&gt;</span>CCR4 <span class="sy0">=</span> <span class="nu0">250</span><span class="sy0">;</span> <span class="coMULTI">/* Strida 25 % */</span>
+&nbsp;
+  TIM3<span class="sy0">-&gt;</span>CCMR2 <span class="sy0">=</span> <span class="br0">&#40;</span>6u <span class="sy0">&lt;&lt;</span> TIM_CCMR2_OC4M_Pos<span class="br0">&#41;</span><span class="sy0">;</span> <span class="coMULTI">/* PWM mod, kanal 4 aktivni dokud CNT &lt; CCR*/</span>
+  TIM3<span class="sy0">-&gt;</span>CCER <span class="sy0">=</span> TIM_CCER_CC4E<span class="sy0">;</span> <span class="coMULTI">/* Aktivuj kanal 4, kanal 4 je aktivni v logicke 1 */</span>
+  TIM3<span class="sy0">-&gt;</span>CR1 <span class="sy0">|=</span> TIM_CR1_CEN<span class="sy0">;</span> <span class="coMULTI">/* Zapni casovac */</span></pre>
+
+</p>
+<div class="plugin_note notetip">LEDka nebude svítit, protože prozatím není připojena k časovači. K připojení fyzického pinu k libovolné periferii je třeba GPIO pin nastavit do správné alternativní funkce.
+</div>
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\u010casova\u010de&quot;,&quot;hid&quot;:&quot;casovace&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;4552-10468&quot;} -->
+<h3 class="sectionedit9" id="alternativni_funkce_gpio_pinu">Alternativní funkce GPIO pinu</h3>
+<div class="level3">
+
+<p>
+Propojení fyzických GPIO pinů a periferií je dosaženo přes tzv. alternativní funkce (AF) pinů.
+Připojení funkcí k pinům se liší pro každý specifický čip a proto tento popis nalezneme v datovém listu mikrokontroléru.
+Pro STM32F401RET nalezneme mapování alternativních funkcí na piny v tabulce 9 v datovém listu [<a href='/wiki/bib?file=amp_mam&amp;ref=STM32F4_DS'>STM32F4_DS</a>].
+Každý pin může mít jednu z 16 různých alternativních funkcí.
+</p>
+
+<p>
+Nastavení AF probíhá ve dvou krocích.
+Nejprve je třeba nastavit požadovanou AF v registrech <code>GPIO→AFRL</code> nebo <code>GPIO→AFRH</code>.
+Poté můžeme změnit mód pinu na alternativní funkci v registru <code>GPIO→MODER</code>.
+Od toho momentu daná periferie přebírá kontrolu nad pinem.
+</p>
+
+<p>
+Níže je příklad projení LEDky s časovačem z předchozího příkladu.
+V příkladu LEDka připojena ke GPIO pinu PB1 a jeho alternativní funkce číslo 2 je právě kanál 4 časovače 3 (<code>TIM3_CH4</code>).
+<pre class="code c">  GPIOB<span class="sy0">-&gt;</span>MODER <span class="sy0">&amp;=</span> ~GPIO_MODER_MODE1_Msk<span class="sy0">;</span>
+  GPIOB<span class="sy0">-&gt;</span>AFR<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> <span class="sy0">&amp;=</span> ~GPIO_AFRL_AFSEL1_Msk<span class="sy0">;</span>
+  GPIOB<span class="sy0">-&gt;</span>AFR<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> <span class="sy0">|=</span>  2u <span class="sy0">&lt;&lt;</span> GPIO_AFRL_AFSEL1_Pos<span class="sy0">;</span>
+  GPIOB<span class="sy0">-&gt;</span>MODER <span class="sy0">|=</span> 2u <span class="sy0">&lt;&lt;</span> GPIO_MODER_MODE1_Pos<span class="sy0">;</span></pre>
+
+</p>
+<div class="plugin_note notetip">Implementujte výběr alternativní funkce jako samostatnou funkci v C.
+</div>
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Alternativn\u00ed funkce GPIO pinu&quot;,&quot;hid&quot;:&quot;alternativni_funkce_gpio_pinu&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:9,&quot;range&quot;:&quot;10469-11719&quot;} -->
+<h3 class="sectionedit10" id="morseuv_kod">Morseův kód</h3>
+<div class="level3">
+
+<p>
+Každý znak je zakódován pomocí symbolů tečka, čárka, které jsou odděleny mezerou.
+Slova jsou oddělena delší mezerou.
+Délka každého symbolu a mezery je dána počtem časových jednotek.
+Délka časové jednotky je $T_{\mathrm{dit}} = \frac{1200}{\mathrm{WPM}} [\mathrm{ms}]$, kde $\mathrm{WPM}$ je počet slov <code>PARIS</code> za minutu (<em>Words Per Minute</em>, <a href="https://en.wikipedia.org/wiki/Morse_code#Development_and_history" class="urlextern" title="https://en.wikipedia.org/wiki/Morse_code#Development_and_history" rel="nofollow">Morse code na Wikipedii</a>).
+Délky jsou uvedeny v tabulce níže.
+</p>
+<div class="table sectionedit11"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0"> Symbol </th><th class="col1"> Tečka (<em>dit</em>) </th><th class="col2"> Čárka (<em>dah</em>) </th><th class="col3"> Mezera mezi symboly </th><th class="col4"> Mezera mezi znaky </th><th class="col5"> Mezera mezi slovy </th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<th class="col0"> Časových jednotek </th><td class="col1"> 1 </td><td class="col2"> 3 </td><td class="col3"> 1 </td><td class="col4"> 3 </td><td class="col5"> 7 </td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:11,&quot;range&quot;:&quot;12249-12404&quot;} -->
+<p>
+Pro odeslání znaku je třeba vyslat symboly v určitém pořadí a s určitým časováním.
+K tomu se k hodí použít stavový automat (<em>Finite State Machine</em>, FSM), jehož výstup říká, jestli výstup má být aktivní (má být hluk) nebo ne.
+Toto využijeme k zapínání časovače.
+</p>
+
+<p>
+Stavový automat se v jazyce C realizuje řídící strukturou <code>switch-case</code> a stavové proměnné.
+Každý čas má přiřazenou svou hodnotu.
+Funkce stavového automatu je pravidelně volána a přechod mezi stavy může být buď v reakci na nějakou událost (například hodnota indexu pole je na konci) nebo bez podmínkový (kdy je nutné nejprve provést konfiguraci před vstupem do dalšího stavu).
+Pro přehlednost a jednoduchost je doporučeno využít pojmenovaných konstant kompilátoru <code>enum</code>, například <code>state = sendChar</code>,  místo číselných literálů (například <code>state = 4</code>).
+</p>
+
+<p>
+FSM pro posílání symbolů se nabízí navrhnout se stavy <code>SEND DAH</code>, <code>SEND DIT</code>, <code>NEXT SYMBOL</code> a <code>WAIT</code>.
+Stavový diagram je na obrázku <a href="labs_03.html#img_morse_char_encode_symbol">figure&nbsp;4</a>.
+</p>
+
+<p>
+<span id="img_morse_char_encode" class="imgcaption">
+<a href="https://cw.fel.cvut.cz/wiki/_detail/courses/amp_mam/labs/morse_encode_fsm.jpg?id=courses%3Aamp_mam%3Alabs%3A03" class="media" title="courses:amp_mam:labs:morse_encode_fsm.jpg"><img src="img/morse_encode_fsm.jpg" class="mediacenter" title="Stavový automat vysílání jednoho znaku Morseova kódu." alt="Stavový automat vysílání jednoho znaku Morseova kódu." width="400" /></a>
+<span class="undercaption">
+	Fig. 3:  Stavový automat vysílání jednoho znaku Morseova kódu. <a href=" "><span></span></a>
+</span>
+</span>
+</p>
+
+<p>
+FSM výše je sice intuitivní, avšak při rozšíření dalšími stavy pro posílání dalších znaků se stane nepřehledným.
+výhodnější implementace využívá toho, že tečka, mezera mají stejnou délku a že čárka “trvá” tři tečky a že znaky nekončí ani nezačínají mezerou.
+Pak lze každý znak uchovat v jedné proměnné, kde každý bit reprezentuje buď vysílání či ticho (tečka je pak jedna jednička &#039;1&#039;, mezera mezi znaky jedna nula &#039;0&#039; a čárka tři jedničky &#039;111&#039;).
+Například znak &#039;A&#039; je kódován jako <code>.-</code> (a-kát), tečka, mezera a čárka.
+Symboly pak zapíšeme <code>0b11101</code> (čteno zprava doleva).
+Pro vysílání nám pak stačí jediný stav <code>SEND CHAR</code>, který se ptá na hodnotu nejnižšího bitu vysílaného znaku a znak postupně posouvá bitovým posunem doprava.
+Takovýto FSM, který uvažuje i posílání více znaků, je na obrázku <a href="labs_03.html#img_morse_char_encode_symbol">figure&nbsp;4</a>.
+Stavům automatu pak může odpovídat <code>enum</code>
+<pre class="code c">  <span class="kw4">typedef</span> <span class="kw2">enum</span> enMorseState_e
+  <span class="br0">&#123;</span>
+    msIdle<span class="sy0">,</span> msChar<span class="sy0">,</span> msNextChar<span class="sy0">,</span> msWait<span class="sy0">,</span> msStateCount
+  <span class="br0">&#125;</span> enMorseState_t<span class="sy0">;</span></pre>
+
+</p>
+
+<p>
+<span id="img_morse_char_encode_symbol" class="imgcaption">
+<a href="https://cw.fel.cvut.cz/wiki/_detail/courses/amp_mam/labs/morse_encode_fsm_symbol.jpg?id=courses%3Aamp_mam%3Alabs%3A03" class="media" title="courses:amp_mam:labs:morse_encode_fsm_symbol.jpg"><img src="img/morse_encode_fsm_symbol.jpg" class="mediacenter" title="Stavový automat vysílání zprávy, jeden znak se celý pošle ve stavu &#039;&#039;SEND CHAR&#039;&#039;." alt="Stavový automat vysílání zprávy, jeden znak se celý pošle ve stavu &#039;&#039;SEND CHAR&#039;&#039;." width="400" /></a>
+<span class="undercaption">
+	Fig. 4:  Stavový automat vysílání zprávy , jeden znak se celý pošle ve stavu &#039;&#039;SEND CHAR&#039;&#039;. <a href=" "><span></span></a>
+</span>
+</span>
+</p>
+
+<p>
+Níže je část morseova kódu se zmíněnou reprezentací.
+<pre class="code c"><span class="kw4">const</span> <span class="kw4">uint32_t</span> morse_code<span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="br0">&#123;</span>
+  <span class="br0">&#91;</span><span class="st0">'A'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="nu6">0b11101</span><span class="sy0">,</span> <span class="coMULTI">/* a-kat */</span>
+  <span class="br0">&#91;</span><span class="st0">'P'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="nu6">0b10111011101</span><span class="sy0">,</span> <span class="coMULTI">/* po-zar-ni-ci */</span>
+  <span class="br0">&#91;</span><span class="st0">'M'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="nu6">0b1110111</span><span class="sy0">,</span> <span class="coMULTI">/* ma-va */</span>
+  <span class="coMULTI">/* zbytek */</span>
+ <span class="br0">&#125;</span></pre>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Morse\u016fv k\u00f3d&quot;,&quot;hid&quot;:&quot;morseuv_kod&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:10,&quot;range&quot;:&quot;11720-15348&quot;} -->
+<h3 class="sectionedit12" id="periodicke_ulohy">Periodické úlohy</h3>
+<div class="level3">
+
+<p>
+Ve vestavných systémech se často setkáváme s úlohami, které je třeba periodicky provádět.
+Například obnovení displeje či měření teploty.
+Výše jsme se seznámili s periferií <code>SYSTICK</code>, která se ke spouštění takovýchto úloh perfektně hodí.
+</p>
+
+<p>
+Každá úloha však má jinou periodu spouštění a jiná data, která pro svou práci potřebuje.
+Proto je třeba zvolit vhodnou periodu <code>SYSTICK</code>, například 1 milisekundu, aby úlohy mohly být spouštěny s požadovanou periodou.
+Odpočet pro spuštění spolu s nastavením periody spouštění může být právě součástí dat každé úlohy.
+Například
+<pre class="code c"><span class="coMULTI">/* task.h */</span>
+<span class="kw4">typedef</span> <span class="kw4">struct</span> taskdata_s
+<span class="br0">&#123;</span>
+  <span class="kw4">uint32_t</span> cnt<span class="sy0">,</span> period<span class="sy0">;</span>
+  <span class="kw4">int32_t</span> <span class="br0">&#40;</span><span class="sy0">*</span>run<span class="br0">&#41;</span><span class="br0">&#40;</span><span class="kw4">void</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="coMULTI">/* ukazatel na funkci, ktera ulohu provede,... ano to C umí */</span>
+  <span class="coMULTI">/* dalsi data ulohy */</span>
+<span class="br0">&#125;</span> taskdata_t<span class="sy0">;</span>
+&nbsp;
+<span class="kw2">extern</span> taskdata_t task<span class="sy0">;</span> <span class="coMULTI">/* zverejni data ulohy mimo tento modul */</span>
+&nbsp;
+<span class="kw4">void</span> task_init<span class="br0">&#40;</span><span class="kw4">void</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="coMULTI">/* task.c */</span>
+&nbsp;
+taskdata_t task<span class="sy0">;</span>
+&nbsp;
+<span class="kw4">int32_t</span> task_function<span class="br0">&#40;</span><span class="kw4">void</span><span class="br0">&#41;</span> <span class="br0">&#123;</span> <span class="coMULTI">/* ... */</span> <span class="br0">&#125;</span>
+&nbsp;
+<span class="kw4">void</span> task_init<span class="br0">&#40;</span><span class="kw4">void</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  task.<span class="me1">cnt</span> <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">;</span> <span class="coMULTI">/* Spust se pri prvnim SYSTICK ticku */</span>
+  task.<span class="me1">period</span> <span class="sy0">=</span> <span class="nu0">120</span><span class="sy0">;</span> <span class="coMULTI">/* spust se kazdych 120 ms, pokud perioda SYSTICK je 1 ms */</span>
+  task.<span class="me1">run</span> <span class="sy0">=</span> task_function<span class="sy0">;</span>
+  <span class="coMULTI">/* dalsi inicializace */</span>
+<span class="br0">&#125;</span></pre>
+
+</p>
+
+<p>
+Při každém tiku <code>SYSTICK</code> je odpočet spuštění dekrementován o jedničku.
+Jakmile dosáhne odpočet nuly, je úloha spuštěna a odpočet obnoven.
+</p>
+
+<p>
+<pre class="code c"><span class="kw4">void</span> hadle_systick<span class="br0">&#40;</span><span class="kw4">void</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">if</span><span class="br0">&#40;</span><span class="sy0">--</span>task.<span class="me1">cnt</span> <span class="sy0">==</span> <span class="nu0">0</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    task.<span class="me1">cnt</span> <span class="sy0">=</span> task.<span class="me1">period</span><span class="sy0">;</span> <span class="coMULTI">/* Obnov odpocet */</span>
+    task.<span class="me1">run</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="coMULTI">/* spust ulohu */</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span></pre>
+
+</p>
+<div class="plugin_note noteimportant">Přerušení přeruší vykonávání hlavní smyčky, která může spouštět časově citlivé operace.
+Obsluha přerušení by tak měla být co nejkratší. Řiďte se heslem: nastavit to nejnutnější (vyčistit pending bit, nastavit příznak) a co nejdřív z přerušení zmizet.
+Na příkladu <code>SYSTICK</code> to může vypadat takto
+<pre class="code c"><span class="kw4">static</span> <span class="kw4">uint32_t</span> uiSysTick <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span>
+<span class="kw4">volatile</span> <span class="kw4">uint32_t</span> FL_systick <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span> <span class="coMULTI">/* Flag/Priznak, ze doslo k preruseni */</span> 
+&nbsp;
+<span class="kw4">void</span> SysTick_Handler<span class="br0">&#40;</span><span class="kw4">void</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="sy0">++</span>uiSysTick<span class="sy0">;</span>
+  FL_systick <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="kw4">int</span> main<span class="br0">&#40;</span><span class="kw4">void</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="coMULTI">/* nejaky kod */</span>
+  <span class="kw1">while</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+  <span class="br0">&#123;</span>
+    <span class="coMULTI">/* dalsi kod */</span>
+&nbsp;
+    <span class="kw1">if</span><span class="br0">&#40;</span>FL_systick<span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+      FL_systick <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span> <span class="coMULTI">/* vycisti priznak at muzeme cekat na dalsi */</span>
+      handle_systick<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="coMULTI">/* dalsi kod */</span>
+  <span class="br0">&#125;</span>
+  <span class="kw1">return</span> <span class="nu0">1</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+
+</div>
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Periodick\u00e9 \u00falohy&quot;,&quot;hid&quot;:&quot;periodicke_ulohy&quot;,&quot;codeblockOffset&quot;:5,&quot;secid&quot;:12,&quot;range&quot;:&quot;15349-17727&quot;} -->
+<h3 class="sectionedit13" id="otazky_k_zamysleni">Otázky k zamyšlení</h3>
+<div class="level3">
+<ol>
+<li class="level1"><div class="li">
+ Jaký vliv mají hodnoty <code>TIMx→PSC</code> a <code>TIMx→ARR</code> na rozlišení časovače?
+</div></li>
+<li class="level1"><div class="li">
+ Proč je třeba k nastavení alternativní funkce pinu třeba dvou registrů (<code>GPIOx→AFRL</code> a <code>GPIOx→AFRH</code>)?
+</div></li>
+<li class="level1"><div class="li">
+ Jaké výhody přináší použití <code>enum</code> místo číselných literálů při programování (nejen v kontextu FSM)?
+</div></li>
+<li class="level1"><div class="li">
+ Proč je důležité klíčové slovo <code>volatile</code>?
+</div></li>
+<li class="level1"><div class="li">
+ Jak by šlo vylepšit kódování písmen do Morseovy abecedy?
+</div></li>
+<li class="level1"><div class="li">
+ Jak by šlo upravit ovladač GPIO, abychom jeho hlavičkový soubor zbavili závislosti na <code>stm32f4xx.h</code>?  Tedy, aby nebylo nutné funkcím předávat ukazatel na konkrétní GPIO periferii. Šlo by využít nějaké mapování či aliasování?
+</div></li>
+</ol>
+
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Ot\u00e1zky k zamy\u0161len\u00ed&quot;,&quot;hid&quot;:&quot;otazky_k_zamysleni&quot;,&quot;codeblockOffset&quot;:8,&quot;secid&quot;:13,&quot;range&quot;:&quot;17728-&quot;} --></div>
+</body>
+</html>

@@ -99,7 +99,6 @@ int main(void)
   uart_init();
   systick_init();
 
- 
   RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
   GPIOA->MODER &= ~GPIO_MODER_MODER1_Msk;
 
