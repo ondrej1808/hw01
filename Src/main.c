@@ -41,7 +41,7 @@ int main(void)
       if (--morse.task_cnt == 0)
       {
         morse.task_cnt = morse.task_period;
-        morse_out_set(morse_task(), demorse_isTone());
+        morse_out_set(morse_task(), demorse_getMode() == MODE_TONE);
       }
       demorse_task();
       button_task();

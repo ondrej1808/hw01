@@ -27,8 +27,16 @@ void button_task(void)
     else if (!pressed)
     {
       pressed = 1;
-      demorse_setTone(!demorse_isTone());
-      seg7_print_text(demorse_isTone() ? "tonE" : "PULS");
+      if (demorse_getMode() == MODE_PULSE)
+      {
+        demorse_setMode(MODE_TONE);
+        seg7_print_text("tonE");
+      }
+      else
+      {
+        demorse_setMode(MODE_PULSE);
+        seg7_print_text("PULS");
+      }
     }
   }
   else

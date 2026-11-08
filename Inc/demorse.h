@@ -20,14 +20,20 @@ typedef enum
   dmSpace
 } demorseState_t;
 
+typedef enum
+{
+  MODE_PULSE,   /* ON-OFF: signal = log. 1 */
+  MODE_TONE     /* ton: signal = hrany blize nez 5 ms */
+} demorseMode_t;
+
 void demorse_init(void);
 
 void demorse_task(void);
 
 char demorse_getChar(void);
 
-void demorse_setTone(uint8_t tone);
+void demorse_setMode(demorseMode_t mode);
 
-uint8_t demorse_isTone(void);
+demorseMode_t demorse_getMode(void);
 
 #endif /* DEMORSE_H */

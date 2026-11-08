@@ -23,8 +23,8 @@ static volatile uint8_t  edge_new_flag;     // 1 = hrana ceka na zpracovani
 static char    ch_buf[CH_BUF_SIZE];
 static uint8_t ch_head, ch_tail;
 
-static demorseState_t state = dmIdle;
-static uint8_t  tone_mode;   
+static demorseState_t demorse_state = dmIdle;
+static demorseMode_t demorse_mode = MODE_PULSE;   
 static uint16_t seg_start;   
 static uint16_t last_edge;     
 static uint32_t sym_code;      
@@ -96,7 +96,7 @@ static void on_space(uint16_t len)
   if (len >= 5 * T_DIT)
   {
     put_char(' ');
-    state = dmIdle;
+    demorse_state = dmIdle;
   }
 }
 
@@ -133,35 +133,35 @@ void TIM4_IRQHandler(void)
   }
 }
 
-static void on_edge(uint16_t t, uint8_t level)
+static void on_edge(uint16_t t, uint8_t edge_type)
 {
-  if (!tone_mode)
+  if (demorse_mode == MODE_PULSE)
   {
-    if (level == EDGE_RISING)
+    if (edge_type == EDGE_RISING)
     {
-      if (state == dmSpace)
+      if (demorse_state == dmSpace)
       {
         on_space((uint16_t)(t - seg_start));
       }
-      state = dmMark;
+      demorse_state = dmMark;
       seg_start = t;
     }
-    else if (state == dmMark)
+    else if (demorse_state == dmMark)
     {
       on_mark((uint16_t)(t - seg_start));
-      state = dmSpace;
+      demorse_state = dmSpace;
       seg_start = t;
     }
   }
   else
   {
-    if (state != dmMark)
+    if (demorse_state != dmMark)
     {
-      if (state == dmSpace)
+      if (demorse_state == dmSpace)
       {
         on_space((t - seg_start));
       }
-      state = dmMark;
+      demorse_state = dmMark;
       seg_start = t;
     }
     last_edge = t;
@@ -184,14 +184,14 @@ void demorse_task(void)
 
   uint16_t now = (uint16_t)TIM4->CNT;
 
-  if (tone_mode && state == dmMark && (uint16_t)(now - last_edge) > TONE_GAP)
+  if (demorse_mode == MODE_TONE && demorse_state == dmMark && (uint16_t)(now - last_edge) > TONE_GAP)
   {
     on_mark((uint16_t)(last_edge - seg_start));
-    state = dmSpace;
+    demorse_state = dmSpace;
     seg_start = last_edge;
   }
 
-  if (state == dmSpace)
+  if (demorse_state == dmSpace)
   {
     on_space((uint16_t)(now - seg_start));
   }
@@ -208,15 +208,15 @@ char demorse_getChar(void)
   return c;
 }
 
-void demorse_setTone(uint8_t tone)
+void demorse_setMode(demorseMode_t mode)
 {
-  tone_mode = tone ? 1 : 0;
-  state = dmIdle;
+  demorse_mode = mode;
+  demorse_state = dmIdle;
   sym_code = 0;
   sym_bits = 0;
 }
 
-uint8_t demorse_isTone(void)
+demorseMode_t demorse_getMode(void)
 {
-  return tone_mode;
+  return demorse_mode;
 }
