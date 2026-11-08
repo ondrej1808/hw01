@@ -6,6 +6,7 @@ target_sources(${PROJECT_NAME} PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/Src/demorse.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/Src/morse.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/Src/uart.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Src/button.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/Src/main.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/Src/startup_stm32f401xx.S"
 )

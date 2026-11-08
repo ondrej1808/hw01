@@ -34,4 +34,7 @@ void morse_init(void);
 
 uint32_t morse_task(void);
 
+/* PC0 = on; PA11 (P3.2): tone != 0 -> PWM 1 kHz, jinak trvala 1 */
+void morse_out_set(uint32_t on, uint8_t tone);
+
 #endif /* MORSE_H_HDR */

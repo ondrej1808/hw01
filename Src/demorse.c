@@ -82,9 +82,9 @@ static void on_mark(uint16_t len)
   }
   else
   {
-    sym_code = 0xFFFFFFFFu;           
-  char_done = 0;
+    sym_code = 0xFFFFFFFFu;
   }
+  char_done = 0;
 }
 
 static void on_space(uint16_t len)
