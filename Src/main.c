@@ -14,7 +14,6 @@ static volatile uint8_t  FL_SysTick;
 static void systick_init(void)
 {
   SysTick_Config(CORE_CLOCK_HZ / 1000);
-  NVIC_SetPriority(SysTick_IRQn, 3);   
 }
 
 void SysTick_Handler(void)
