@@ -114,8 +114,7 @@ void demorse_init(void)
 
   TIM4->PSC = 1600 - 1;                  
   TIM4->ARR = 0xFFFF;
-  TIM4->CCMR1 = TIM_CCMR1_CC2S_0                       
-              | TIM_CCMR1_IC2F_1 | TIM_CCMR1_IC2F_0;  
+  TIM4->CCMR1 = TIM_CCMR1_CC2S_0 | TIM_CCMR1_IC2F_1 | TIM_CCMR1_IC2F_0;  
   TIM4->CCER = TIM_CCER_CC2E | TIM_CCER_CC2P | TIM_CCER_CC2NP;
   TIM4->EGR = TIM_EGR_UG;
   TIM4->SR = 0;
