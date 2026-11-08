@@ -1,5 +1,6 @@
 #include "demorse.h"
 #include "stm32f401.h"
+#include "stm32f4xx_hal_gpio.h"
 
 #define TICKS_PER_MS   10
 #define T_DIT          (DEMORSE_TDIT_MS * TICKS_PER_MS) 
@@ -107,13 +108,14 @@ void demorse_init(void)
   RCC->APB1ENR |= RCC_APB1ENR_TIM4EN;
 
   GPIOB->AFR[0] &= ~GPIO_AFRL_AFSEL7_Msk;
-  GPIOB->AFR[0] |= 2 << GPIO_AFRL_AFSEL7_Pos;
+  GPIOB->AFR[0] |= GPIO_AF2_TIM4 << GPIO_AFRL_AFSEL7_Pos;
   GPIOB->MODER &= ~GPIO_MODER_MODER7_Msk;
-  GPIOB->MODER |= 2 << GPIO_MODER_MODE7_Pos;
+  GPIOB->MODER |= GPIO_MODE_AF_PP << GPIO_MODER_MODE7_Pos;
 
   TIM4->PSC = 1600 - 1;                  
   TIM4->ARR = 0xFFFF;
-  TIM4->CCMR1 = (1 << TIM_CCMR1_CC2S_Pos) | (3 << TIM_CCMR1_IC2F_Pos);
+  TIM4->CCMR1 = TIM_CCMR1_CC2S_0                       
+              | TIM_CCMR1_IC2F_1 | TIM_CCMR1_IC2F_0;  
   TIM4->CCER = TIM_CCER_CC2E | TIM_CCER_CC2P | TIM_CCER_CC2NP;
   TIM4->EGR = TIM_EGR_UG;
   TIM4->SR = 0;

@@ -39,6 +39,7 @@ const uint32_t morse_code[] =
 };
 
 #include "stm32f401.h"
+#include "stm32f4xx_hal_gpio.h"
 #include "uart.h"
 
 #define MORSE_CHAR_GAP  3 
@@ -54,18 +55,18 @@ static void morse_out_init(void)
 
   GPIOC->BSRR = GPIO_BSRR_BR0;
   GPIOC->MODER &= ~GPIO_MODER_MODER0_Msk;
-  GPIOC->MODER |= 1 << GPIO_MODER_MODE0_Pos;
+  GPIOC->MODER |= GPIO_MODE_OUTPUT_PP << GPIO_MODER_MODE0_Pos;
 
   GPIOA->AFR[1] &= ~GPIO_AFRH_AFSEL11_Msk;
-  GPIOA->AFR[1] |= 1 << GPIO_AFRH_AFSEL11_Pos;
+  GPIOA->AFR[1] |= GPIO_AF1_TIM1 << GPIO_AFRH_AFSEL11_Pos;
   GPIOA->MODER &= ~GPIO_MODER_MODER11_Msk;
-  GPIOA->MODER |= 2 << GPIO_MODER_MODE11_Pos;
+  GPIOA->MODER |= GPIO_MODE_AF_PP << GPIO_MODER_MODE11_Pos;
 
   RCC->APB2ENR |= RCC_APB2ENR_TIM1EN;
   TIM1->PSC = 16 - 1;                       
   TIM1->ARR = 1000000 / BUZZER_FREQ_HZ - 1;
   TIM1->CCR4 = 0;                           
-  TIM1->CCMR2 = (6 << TIM_CCMR2_OC4M_Pos) | TIM_CCMR2_OC4PE;
+  TIM1->CCMR2 = TIM_CCMR2_OC4M_2 | TIM_CCMR2_OC4M_1 | TIM_CCMR2_OC4PE;
   TIM1->CCER = TIM_CCER_CC4E;
   TIM1->BDTR = TIM_BDTR_MOE;
   TIM1->EGR = TIM_EGR_UG;

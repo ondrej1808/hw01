@@ -1,5 +1,6 @@
 #include "uart.h"
 #include "stm32f401.h"
+#include "stm32f4xx_hal_gpio.h"
 
 #define UART_CLOCK_HZ 16000000   /* APB1 = HSI 16 MHz (bez PLL) */
 
@@ -14,9 +15,9 @@ void uart_init(void)
 
   // PA2 TX, PA3 RX -> AF7
   GPIOA->AFR[0] &= ~(GPIO_AFRL_AFSEL2_Msk | GPIO_AFRL_AFSEL3_Msk);
-  GPIOA->AFR[0] |= (7 << GPIO_AFRL_AFSEL2_Pos) | (7 << GPIO_AFRL_AFSEL3_Pos);
+  GPIOA->AFR[0] |= (GPIO_AF7_USART2 << GPIO_AFRL_AFSEL2_Pos) | (GPIO_AF7_USART2 << GPIO_AFRL_AFSEL3_Pos);
   GPIOA->MODER &= ~(GPIO_MODER_MODER2_Msk | GPIO_MODER_MODER3_Msk);
-  GPIOA->MODER |= (2 << GPIO_MODER_MODE2_Pos) | (2 << GPIO_MODER_MODE3_Pos);
+  GPIOA->MODER |= (GPIO_MODE_AF_PP << GPIO_MODER_MODE2_Pos) | (GPIO_MODE_AF_PP << GPIO_MODER_MODE3_Pos);
 
   // oversampling 16: BRR = f / baud (zaokrouhleno)
   USART2->BRR = (UART_CLOCK_HZ + UART_BAUD / 2) / UART_BAUD;

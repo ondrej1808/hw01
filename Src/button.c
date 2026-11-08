@@ -1,5 +1,6 @@
 #include "button.h"
 #include "stm32f401.h"
+#include "stm32f4xx_hal_gpio.h"
 #include "demorse.h"
 #include "seg7.h"
 
@@ -8,7 +9,8 @@
 void button_init(void)
 {
   RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
-  GPIOA->MODER &= ~GPIO_MODER_MODER1_Msk;   // PA1 vstup
+  GPIOA->MODER &= ~GPIO_MODER_MODER1_Msk;
+  GPIOA->MODER |= GPIO_MODE_INPUT << GPIO_MODER_MODE1_Pos;   // PA1 vstup
 }
 
 void button_task(void)
