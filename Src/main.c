@@ -7,8 +7,7 @@
 #include "button.h"
 
 #define CORE_CLOCK_HZ  16000000
-
-static volatile uint32_t uiSysTick; 
+ 
 static volatile uint8_t  FL_SysTick;  
 
 static void systick_init(void)
@@ -18,7 +17,6 @@ static void systick_init(void)
 
 void SysTick_Handler(void)
 {
-  uiSysTick++;
   FL_SysTick = 1;
 }
 
