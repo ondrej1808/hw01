@@ -3,21 +3,18 @@
 
 #define SEG7_DIGITS 4
 
-/* cislice -> segmenty (bit0=a ... bit6=g, bit7=DP) */
 static const uint8_t seg7_font[16] =
 {
   0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, /* 0..7 */
   0x7F, 0x6F, 0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71  /* 8..F */
 };
 
-/* vyber digitu = horni bajt: Q4 = vlevo ... Q7 = vpravo (overeno na desce) */
 static const uint8_t seg7_digit_sel[SEG7_DIGITS] = { 0x10, 0x20, 0x40, 0x80 };
 
-static volatile uint8_t seg7_buf[SEG7_DIGITS]; /* segmenty, [0] = vlevo */
-static uint8_t seg7_brightness = SEG7_BRIGHTNESS_MAX; /* jas 0..100 %, vychozi 100 */
+static volatile uint8_t seg7_buf[SEG7_DIGITS];
+static uint8_t seg7_brightness = SEG7_BRIGHTNESS_MAX;
 static uint8_t seg7_pos;
 
-// -------------------------- Ovladani pinu ---------------------------
 
 void seg7_write_data(bool state)
 {
@@ -44,16 +41,15 @@ void seg7_output_buffer_write(void)
 
 void seg7_clear_registers(void)
 {
-  GPIOC->BSRR = GPIO_BSRR_BR8;  /* /SRCLR = 0 -> vynuluje posuvny registr */
+  GPIOC->BSRR = GPIO_BSRR_BR8;
   GPIOC->BSRR = GPIO_BSRR_BS8;
-  seg7_output_buffer_write();   /* nuly i na vystupy */
+  seg7_output_buffer_write(); 
 }
 
 void init_seg7(void)
 {
   RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN | RCC_AHB1ENR_GPIOBEN | RCC_AHB1ENR_GPIOCEN;
 
-  /* klidove stavy: /SRCLR=1, /OE=0, hodiny a data 0 */
   GPIOC->BSRR = GPIO_BSRR_BS8 | GPIO_BSRR_BR9 | GPIO_BSRR_BR10 | GPIO_BSRR_BR12;
   GPIOA->BSRR = GPIO_BSRR_BR15;
 
@@ -61,16 +57,15 @@ void init_seg7(void)
                     GPIO_MODER_MODE10_Msk | GPIO_MODER_MODE12_Msk);
   GPIOC->MODER |= (1 << GPIO_MODER_MODE8_Pos) | (1 << GPIO_MODER_MODE9_Pos) |
                   (1 << GPIO_MODER_MODE10_Pos) | (1 << GPIO_MODER_MODE12_Pos);
-  GPIOA->MODER &= ~GPIO_MODER_MODE15_Msk;      /* PA15 je po resetu JTDI (AF) */
+  GPIOA->MODER &= ~GPIO_MODER_MODE15_Msk;
   GPIOA->MODER |= 1 << GPIO_MODER_MODE15_Pos;
 
-  /* PB1 = /OE budice -> TIM3_CH4 (AF2), PWM 20 kHz, aktivni v 0 (CC4P) */
   RCC->APB1ENR |= RCC_APB1ENR_TIM3EN;
-  TIM3->PSC = 8 - 1;                       /* 16 MHz / 8 = 2 MHz */
-  TIM3->ARR = SEG7_BRIGHTNESS_MAX - 1;      /* 2 MHz / 100 = 20 kHz */
+  TIM3->PSC = 8 - 1;
+  TIM3->ARR = SEG7_BRIGHTNESS_MAX - 1;
   TIM3->CCR4 = seg7_brightness;
-  TIM3->CCMR2 = (6 << TIM_CCMR2_OC4M_Pos) | TIM_CCMR2_OC4PE; /* PWM1: aktivni pri CNT < CCR4 */
-  TIM3->CCER = TIM_CCER_CC4E | TIM_CCER_CC4P;                 /* aktivni = log. 0 = budic zapnut */
+  TIM3->CCMR2 = (6 << TIM_CCMR2_OC4M_Pos) | TIM_CCMR2_OC4PE;
+  TIM3->CCER = TIM_CCER_CC4E | TIM_CCER_CC4P;
   TIM3->EGR = TIM_EGR_UG;
   TIM3->CR1 = TIM_CR1_ARPE | TIM_CR1_CEN;
 
@@ -82,9 +77,9 @@ void init_seg7(void)
   seg7_clear_registers();
 }
 
-// -------------------------- "High level" ----------------------
 
-/* posle jeden 16bit ramec: digit (horni bajt) + segmenty (dolni), MSB first */
+
+
 static void seg7_send(uint8_t digit, uint8_t segments)
 {
   uint16_t frame = ((uint16_t)digit << 8) | segments;
@@ -98,7 +93,7 @@ static void seg7_send(uint8_t digit, uint8_t segments)
 void seg7_set_brightness(uint8_t brightness)
 {
   seg7_brightness = (brightness > SEG7_BRIGHTNESS_MAX) ? SEG7_BRIGHTNESS_MAX : brightness;
-  TIM3->CCR4 = seg7_brightness; /* preload -> plati od dalsi periody PWM */
+  TIM3->CCR4 = seg7_brightness; 
 }
 
 void seg7_print_raw(uint32_t message)

@@ -34,7 +34,7 @@ static uint8_t  char_done;
 
 static void put_char(char c)
 {
-  uint8_t next = (uint8_t)((ch_head + 1) & (CH_BUF_SIZE - 1));
+  uint8_t next = ((ch_head + 1) & (CH_BUF_SIZE - 1));
   if (next != ch_tail)
   {
     ch_buf[ch_head] = c;
@@ -166,7 +166,7 @@ static void on_edge(uint16_t t, uint8_t level)
     {
       if (state == dmSpace)
       {
-        on_space((uint16_t)(t - seg_start));
+        on_space((t - seg_start));
       }
       state = dmMark;
       seg_start = t;
