@@ -6,21 +6,19 @@
 #define T_DIT          (DEMORSE_TDIT_MS * TICKS_PER_MS) 
 #define TONE_GAP       (5 * TICKS_PER_MS)
 
-#define EV_BUF_SIZE    32
+#define EDGE_RISING    1   // nabezna hrana: PB7 je po hrane v 1
+#define EDGE_FALLING   0   // sestupna hrana: PB7 je po hrane v 0
+
 #define CH_BUF_SIZE    16
 #define MAX_CODE_BITS  28
 
 
 extern const uint32_t morse_code[];
 
-typedef struct
-{
-  uint16_t time;  
-  uint8_t  level;  
-} edge_t;
-
-static volatile edge_t  ev_buf[EV_BUF_SIZE];
-static volatile uint8_t ev_head, ev_tail;
+// posledni hrana z preruseni (demorse_task ji vyzvedne do 1 ms)
+static volatile uint16_t edge_time;    // CCR2 v okamziku hrany
+static volatile uint8_t  edge_level;   // EDGE_RISING / EDGE_FALLING
+static volatile uint8_t  edge_new_flag;     // 1 = hrana ceka na zpracovani
 
 static char    ch_buf[CH_BUF_SIZE];
 static uint8_t ch_head, ch_tail;
@@ -114,7 +112,7 @@ void demorse_init(void)
 
   TIM4->PSC = 1600 - 1;                  
   TIM4->ARR = 0xFFFF;
-  TIM4->CCMR1 = TIM_CCMR1_CC2S_0 | TIM_CCMR1_IC2F_1 | TIM_CCMR1_IC2F_0;  
+  TIM4->CCMR1 = TIM_CCMR1_CC2S_0 | TIM_CCMR1_IC2F_1 | TIM_CCMR1_IC2F_0;
   TIM4->CCER = TIM_CCER_CC2E | TIM_CCER_CC2P | TIM_CCER_CC2NP;
   TIM4->EGR = TIM_EGR_UG;
   TIM4->SR = 0;
@@ -129,23 +127,17 @@ void TIM4_IRQHandler(void)
 {
   if (TIM4->SR & TIM_SR_CC2IF)
   {
-    uint16_t t = (uint16_t)TIM4->CCR2;
-    uint8_t next = (uint8_t)((ev_head + 1) & (EV_BUF_SIZE - 1));
-    if (next != ev_tail)
-    {
-      ev_buf[ev_head].time = t;
-      ev_buf[ev_head].level = (GPIOB->IDR & GPIO_IDR_ID7) ? 1 : 0;
-      ev_head = next;
-    }
+    edge_time  = (uint16_t)TIM4->CCR2;   // cteni CCR2 nuluje CC2IF
+    edge_level = (GPIOB->IDR & GPIO_IDR_ID7) ? EDGE_RISING : EDGE_FALLING;
+    edge_new_flag = 1;
   }
-  TIM4->SR = ~TIM_SR_CC2OF;
 }
 
 static void on_edge(uint16_t t, uint8_t level)
 {
   if (!tone_mode)
   {
-    if (level)
+    if (level == EDGE_RISING)
     {
       if (state == dmSpace)
       {
@@ -178,10 +170,16 @@ static void on_edge(uint16_t t, uint8_t level)
 
 void demorse_task(void)
 {
-  while (ev_tail != ev_head)
+  if (edge_new_flag)
   {
-    on_edge(ev_buf[ev_tail].time, ev_buf[ev_tail].level);
-    ev_tail = (uint8_t)((ev_tail + 1) & (EV_BUF_SIZE - 1));
+    // cas a uroven precist naraz, at je preruseni mezi nimi neprepise
+    __disable_irq();
+    uint16_t t = edge_time;
+    uint8_t  level = edge_level;
+    edge_new_flag = 0;
+    __enable_irq();
+
+    on_edge(t, level);
   }
 
   uint16_t now = (uint16_t)TIM4->CNT;
